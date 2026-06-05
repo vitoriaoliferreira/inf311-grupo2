@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Cabeçalho Global -->
+        <include
+            android:id="@+id/cabecalhoGlobal"
+            layout="@layout/layout_cabecalho" />
+
+        <!-- Avatar Circular -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvAvatarDetalhe"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="4dp"
+            app:strokeWidth="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cabecalhoGlobal">
+
+            <ImageView
+                android:id="@+id/imgAvatarDetalhe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Foto do Palestrante"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_avatar_placeholder" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Textos Principais -->
+        <TextView
+            android:id="@+id/tvNomeDetalhe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvAvatarDetalhe"
+            tools:text="Maria Silva" />
+
+        <TextView
+            android:id="@+id/tvCargoDetalhe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNomeDetalhe"
+            tools:text="Especialista em Gestão Pública" />
+
+        <!-- Biografia -->
+        <TextView
+            android:id="@+id/tvLabelBio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:text="Biografia"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCargoDetalhe" />
+
+        <TextView
+            android:id="@+id/tvBioDetalhe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:justificationMode="inter_word"
+            android:textColor="#424242"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvLabelBio"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelBio"
+            tools:targetApi="o"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec pharetra quam. Proin dui ex, rhoncus at arcu sit amet, volutpat euismod orci. Maecenas bibendum risus orci, et interdum metus euismod quis." />
+
+        <!-- Palestras Vinculadas -->
+        <TextView
+            android:id="@+id/tvLabelPalestras"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Palestras"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tvLabelBio"
+            app:layout_constraintTop_toBottomOf="@id/tvBioDetalhe" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPalestrasPalestrante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:nestedScrollingEnabled="false"
+            android:paddingBottom="24dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelPalestras"
+            tools:listitem="@layout/item_programacao" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

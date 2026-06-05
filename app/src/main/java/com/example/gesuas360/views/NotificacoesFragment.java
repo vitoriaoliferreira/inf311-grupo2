@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.gesuas360.R;
 import com.example.gesuas360.adapters.NotificacaoAdapter;
 import com.example.gesuas360.models.Notificacao;
+import com.example.gesuas360.repositories.NotificacaoRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NotificacoesFragment extends BaseFragment {
@@ -31,7 +31,9 @@ public class NotificacoesFragment extends BaseFragment {
 
         RecyclerView rvNotificacoes = view.findViewById(R.id.rvNotificacoes);
         rvNotificacoes.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvNotificacoes.setAdapter(new NotificacaoAdapter(getMockData()));
+        
+        List<Notificacao> lista = NotificacaoRepository.getInstance().getNotificacoes();
+        rvNotificacoes.setAdapter(new NotificacaoAdapter(lista));
     }
 
     @Override
@@ -47,13 +49,5 @@ public class NotificacoesFragment extends BaseFragment {
     @Override
     protected boolean exibirBotaoNotificacoes() {
         return false;
-    }
-
-    private List<Notificacao> getMockData() {
-        List<Notificacao> mockData = new ArrayList<>();
-        mockData.add(new Notificacao("Mudança de Horário", "A palestra das 15h teve seu horário alterado para às 15:30h", "10:30", 0));
-        mockData.add(new Notificacao("Você tem mensagens não lidas", "10 mensagens não lidas", "09:15", 1));
-        mockData.add(new Notificacao("Seu comentário ganhou um like do palestrante", "Veja todas as reações", "Ontem", 2));
-        return mockData;
     }
 }

@@ -16,9 +16,15 @@ import java.util.List;
 public class PalestranteAdapter extends RecyclerView.Adapter<PalestranteAdapter.ViewHolder> {
 
     private List<Palestrante> palestrantes;
+    private OnItemClickListener listener;
 
-    public PalestranteAdapter(List<Palestrante> palestrantes) {
+    public interface OnItemClickListener {
+        void onItemClick(Palestrante palestrante);
+    }
+
+    public PalestranteAdapter(List<Palestrante> palestrantes, OnItemClickListener listener) {
         this.palestrantes = palestrantes;
+        this.listener = listener;
     }
 
     @NonNull
@@ -33,6 +39,12 @@ public class PalestranteAdapter extends RecyclerView.Adapter<PalestranteAdapter.
         Palestrante palestrante = palestrantes.get(position);
         holder.tvNome.setText(palestrante.getNome());
         holder.tvCargo.setText(palestrante.getCargo());
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(palestrante);
+            }
+        });
     }
 
     @Override

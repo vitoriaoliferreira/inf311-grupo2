@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,8 +15,8 @@ import com.example.gesuas360.R;
 import com.example.gesuas360.adapters.DateAdapter;
 import com.example.gesuas360.adapters.ProgramacaoAdapter;
 import com.example.gesuas360.models.Palestra;
+import com.example.gesuas360.repositories.PalestraRepository;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,7 +34,14 @@ public class ProgramacaoFragment extends BaseFragment {
 
         RecyclerView rvProgramacao = view.findViewById(R.id.rv_programacao);
         rvProgramacao.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvProgramacao.setAdapter(new ProgramacaoAdapter(getMockData()));
+        
+        List<Palestra> lista = PalestraRepository.getInstance().getPalestras();
+        
+        ProgramacaoAdapter adapter = new ProgramacaoAdapter(lista, palestra -> {
+            Navigation.findNavController(view).navigate(R.id.action_programacao_to_detalhes);
+        });
+        
+        rvProgramacao.setAdapter(adapter);
 
         RecyclerView rvDates = view.findViewById(R.id.rv_dates);
         rvDates.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -43,20 +51,5 @@ public class ProgramacaoFragment extends BaseFragment {
     @Override
     protected String getTitulo() {
         return "Programação";
-    }
-
-    private List<Palestra> getMockData() {
-        List<Palestra> lista = new ArrayList<>();
-        lista.add(new Palestra("09:00", "Auditório", "Credenciamento e boas-vindas", 
-                "Início das atividades e entrega de materiais.", "", "", false));
-        lista.add(new Palestra("10:00", "Auditório", "Abertura oficial do SUAS 360", 
-                "Presença de autoridades e apresentação do evento.", "", "", false));
-        lista.add(new Palestra("14:00", "Sala A", "Vínculos que Protegem", 
-                "Conexões humanas que sustentam a proteção social no SUAS", 
-                "Mariana Torres", "Assistente Social, Mestre e Doutora em Serviço Social pela PUC/SP", true));
-        lista.add(new Palestra("16:00", "Sala A", "Capacitação em assistência", 
-                "Conexões humanas que sustentam a proteção social no SUAS", 
-                "Maria Silva", "Assistente Social, Mestre e Doutora em Serviço Social pela PUC/SP", false));
-        return lista;
     }
 }

@@ -15,13 +15,21 @@
         android:id="@+id/programacaoFragment"
         android:name="com.example.gesuas360.views.ProgramacaoFragment"
         android:label="Programação"
-        tools:layout="@layout/fragment_programacao" />
+        tools:layout="@layout/fragment_programacao">
+        <action
+            android:id="@+id/action_programacao_to_detalhes"
+            app:destination="@id/detalhesPalestraFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/palestrantesFragment"
         android:name="com.example.gesuas360.views.PalestrantesFragment"
         android:label="Palestrantes"
-        tools:layout="@layout/fragment_palestrantes" />
+        tools:layout="@layout/fragment_palestrantes">
+        <action
+            android:id="@+id/action_palestrantes_to_detalhes"
+            app:destination="@id/detalhesPalestranteFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/mensagensFragment"
@@ -40,5 +48,17 @@
         android:name="com.example.gesuas360.views.NotificacoesFragment"
         android:label="Notificações"
         tools:layout="@layout/fragment_notificacoes" />
+
+    <fragment
+        android:id="@+id/detalhesPalestraFragment"
+        android:name="com.example.gesuas360.views.DetalhesPalestraFragment"
+        android:label="Detalhes da Palestra"
+        tools:layout="@layout/fragment_detalhes_palestra" />
+
+    <fragment
+        android:id="@+id/detalhesPalestranteFragment"
+        android:name="com.example.gesuas360.views.DetalhesPalestranteFragment"
+        android:label="Detalhes do Palestrante"
+        tools:layout="@layout/fragment_detalhes_palestrante" />
 
 </navigation>

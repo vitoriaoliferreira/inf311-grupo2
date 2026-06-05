@@ -7,14 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gesuas360.R;
 import com.example.gesuas360.adapters.PalestranteAdapter;
 import com.example.gesuas360.models.Palestrante;
+import com.example.gesuas360.repositories.PalestranteRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PalestrantesFragment extends BaseFragment {
@@ -32,14 +33,13 @@ public class PalestrantesFragment extends BaseFragment {
         RecyclerView rvPalestrantes = view.findViewById(R.id.rvPalestrantes);
         rvPalestrantes.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<Palestrante> mockData = new ArrayList<>();
-        mockData.add(new Palestrante("Maria Silva", "Especialista em Gestão Pública"));
-        mockData.add(new Palestrante("José da Silva", "Gestor Municipal"));
-        mockData.add(new Palestrante("Tânia Maria", "Especialista em Gestão Pública"));
-        mockData.add(new Palestrante("Paulo Souza", "Especialista em Gestão Pública"));
-        mockData.add(new Palestrante("Abigail Torres", "Especialista em Gestão Pública"));
-
-        rvPalestrantes.setAdapter(new PalestranteAdapter(mockData));
+        List<Palestrante> lista = PalestranteRepository.getInstance().getPalestrantes();
+        
+        PalestranteAdapter adapter = new PalestranteAdapter(lista, palestrante -> {
+            Navigation.findNavController(view).navigate(R.id.action_palestrantes_to_detalhes);
+        });
+        
+        rvPalestrantes.setAdapter(adapter);
     }
 
     @Override

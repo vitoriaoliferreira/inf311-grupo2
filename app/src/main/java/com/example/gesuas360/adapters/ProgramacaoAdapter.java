@@ -1,5 +1,7 @@
 package com.example.gesuas360.adapters;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +19,15 @@ import java.util.List;
 public class ProgramacaoAdapter extends RecyclerView.Adapter<ProgramacaoAdapter.ViewHolder> {
 
     private List<Palestra> palestras;
+    private OnItemClickListener listener;
 
-    public ProgramacaoAdapter(List<Palestra> palestras) {
+    public interface OnItemClickListener {
+        void onItemClick(Palestra palestra);
+    }
+
+    public ProgramacaoAdapter(List<Palestra> palestras, OnItemClickListener listener) {
         this.palestras = palestras;
+        this.listener = listener;
     }
 
     @NonNull
@@ -51,8 +59,24 @@ public class ProgramacaoAdapter extends RecyclerView.Adapter<ProgramacaoAdapter.
             holder.layoutPalestrante.setVisibility(View.GONE);
         }
 
-        holder.ivFavorito.setImageResource(palestra.isFavorito() ? 
-                android.R.drawable.btn_star_big_on : android.R.drawable.btn_star_big_off);
+        if (palestra.isFavorito()) {
+            holder.ivFavorito.setImageResource(R.drawable.ic_bookmark);
+            holder.ivFavorito.setImageTintList(ColorStateList.valueOf(Color.parseColor("#689F38")));
+        } else {
+            holder.ivFavorito.setImageResource(R.drawable.ic_bookmark_border);
+            holder.ivFavorito.setImageTintList(ColorStateList.valueOf(Color.parseColor("#888888")));
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(palestra);
+            }
+        });
+
+        holder.ivFavorito.setOnClickListener(v -> {
+            palestra.setFavorito(!palestra.isFavorito());
+            notifyItemChanged(position);
+        });
     }
 
     @Override

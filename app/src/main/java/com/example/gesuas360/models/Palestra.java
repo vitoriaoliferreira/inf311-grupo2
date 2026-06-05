@@ -19,12 +19,18 @@ public class Palestra {
         this.isFavorito = isFavorito;
     }
 
-    // Getters
     public String getHorario() { return horario; }
     public String getLocal() { return local; }
     public String getTitulo() { return titulo; }
     public String getDescricao() { return descricao; }
     public String getPalestranteNome() { return palestranteNome; }
     public String getPalestranteBio() { return palestranteBio; }
-    public boolean isFavorito() { return isFavorito; }
+    
+    public boolean isFavorito() { 
+        return isFavorito; 
+    }
+
+    public void setFavorito(boolean favorito) {
+        this.isFavorito = favorito;
+    }
 }

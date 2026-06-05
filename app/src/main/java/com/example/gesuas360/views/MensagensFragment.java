@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.gesuas360.R;
 import com.example.gesuas360.adapters.MensagemAdapter;
 import com.example.gesuas360.models.Mensagem;
+import com.example.gesuas360.repositories.MensagemRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MensagensFragment extends BaseFragment {
@@ -32,13 +32,8 @@ public class MensagensFragment extends BaseFragment {
         RecyclerView rvMensagens = view.findViewById(R.id.rvMensagens);
         rvMensagens.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<Mensagem> mockData = new ArrayList<>();
-        mockData.add(new Mensagem("AVISO", "Bem vindos ao SUAS 360!", 
-                "Sejam todos muito bem-vindos ao SUAS 360. Aproveitem cada momento!", "10:30", true));
-        mockData.add(new Mensagem("CHAT - ORGANIZAÇÃO", "Dúvidas Gerais", 
-                "Olá! Em caso de dúvidas, estamos à disposição neste chat.", "10:30", false));
-
-        rvMensagens.setAdapter(new MensagemAdapter(mockData));
+        List<Mensagem> lista = MensagemRepository.getInstance().getMensagens();
+        rvMensagens.setAdapter(new MensagemAdapter(lista));
     }
 
     @Override
