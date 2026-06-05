@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/inicioFragment"
+        android:icon="@drawable/ic_home"
+        android:title="Início" />
+
+    <item
+        android:id="@+id/programacaoFragment"
+        android:icon="@drawable/ic_calendar"
+        android:title="Programação" />
+
+    <item
+        android:id="@+id/palestrantesFragment"
+        android:icon="@drawable/ic_person"
+        android:title="Palestrantes" />
+
+    <item
+        android:id="@+id/mensagensFragment"
+        android:icon="@drawable/ic_message"
+        android:title="Mensagens" />
+
+    <item
+        android:id="@+id/maisFragment"
+        android:icon="@drawable/ic_menu"
+        android:title="Mais" />
+
+</menu>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Avatar Circular -->
+        <ImageView
+            android:id="@+id/iv_avatar_palestrante"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_avatar_placeholder"
+            android:contentDescription="Avatar do Palestrante"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@android:drawable/ic_menu_gallery" />
+
+        <!-- Nome do Palestrante -->
+        <TextView
+            android:id="@+id/tv_nome_palestrante"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_cargo_palestrante"
+            app:layout_constraintEnd_toStartOf="@+id/iv_favorito_palestrante"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_avatar_palestrante"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Maria Silva" />
+
+        <!-- Cargo/Especialidade -->
+        <TextView
+            android:id="@+id/tv_cargo_palestrante"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#616161"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_nome_palestrante"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/tv_nome_palestrante"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nome_palestrante"
+            tools:text="Especialista em Gestão Pública" />
+
+        <!-- Ícone Favorito (Bookmark) -->
+        <ImageView
+            android:id="@+id/iv_favorito_palestrante"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="Favoritar Palestrante"
+            android:padding="4dp"
+            android:src="@drawable/ic_bookmark_border"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#888888" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

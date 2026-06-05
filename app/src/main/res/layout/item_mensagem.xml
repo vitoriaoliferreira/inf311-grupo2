@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Contêiner do Ícone (Esquerda) -->
+        <FrameLayout
+            android:id="@+id/fl_icon_container"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imgIconeFundo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_avatar_placeholder"
+                android:contentDescription="Fundo do Ícone"
+                android:padding="10dp"
+                android:src="@android:drawable/ic_dialog_info"
+                app:tint="@color/white" />
+
+            <View
+                android:id="@+id/indicator_unread"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/bg_indicator_unread" />
+
+        </FrameLayout>
+
+        <!-- Categoria -->
+        <TextView
+            android:id="@+id/tv_categoria"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="#15438B"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tv_horario"
+            app:layout_constraintStart_toEndOf="@id/fl_icon_container"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="AVISO" />
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/tv_titulo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/tv_categoria"
+            app:layout_constraintStart_toStartOf="@id/tv_categoria"
+            app:layout_constraintTop_toBottomOf="@id/tv_categoria"
+            tools:text="Bem vindos ao SUAS 360!" />
+
+        <!-- Corpo -->
+        <TextView
+            android:id="@+id/tv_corpo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="#888888"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_titulo"
+            app:layout_constraintStart_toStartOf="@id/tv_titulo"
+            app:layout_constraintTop_toBottomOf="@id/tv_titulo"
+            tools:text="Sejam todos muito bem-vindos ao SUAS 360. Aproveitem cada momento!" />
+
+        <!-- Horário -->
+        <TextView
+            android:id="@+id/tv_horario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#888888"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="10:30" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

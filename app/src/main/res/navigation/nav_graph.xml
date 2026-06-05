@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/inicioFragment">
+
+    <fragment
+        android:id="@+id/inicioFragment"
+        android:name="com.example.gesuas360.views.InicioFragment"
+        android:label="Início"
+        tools:layout="@layout/fragment_inicio" />
+
+    <fragment
+        android:id="@+id/programacaoFragment"
+        android:name="com.example.gesuas360.views.ProgramacaoFragment"
+        android:label="Programação"
+        tools:layout="@layout/fragment_programacao" />
+
+    <fragment
+        android:id="@+id/palestrantesFragment"
+        android:name="com.example.gesuas360.views.PalestrantesFragment"
+        android:label="Palestrantes"
+        tools:layout="@layout/fragment_palestrantes" />
+
+    <fragment
+        android:id="@+id/mensagensFragment"
+        android:name="com.example.gesuas360.views.MensagensFragment"
+        android:label="Mensagens"
+        tools:layout="@layout/fragment_mensagens" />
+
+    <fragment
+        android:id="@+id/maisFragment"
+        android:name="com.example.gesuas360.views.MaisFragment"
+        android:label="Mais"
+        tools:layout="@layout/fragment_mais" />
+
+    <fragment
+        android:id="@+id/notificacoesFragment"
+        android:name="com.example.gesuas360.views.NotificacoesFragment"
+        android:label="Notificações"
+        tools:layout="@layout/fragment_notificacoes" />
+
+</navigation>

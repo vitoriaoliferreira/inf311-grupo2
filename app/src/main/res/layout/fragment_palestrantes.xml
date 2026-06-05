@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9F9">
+
+    <!-- Cabeçalho Global -->
+    <include
+        android:id="@+id/cabecalhoGlobal"
+        layout="@layout/layout_cabecalho" />
+
+    <!-- Título da Seção -->
+    <LinearLayout
+        android:id="@+id/ll_section_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/cabecalhoGlobal">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="Todos os palestrantes"
+            android:src="@drawable/ic_person_outline"
+            app:tint="#15438B" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Todos os palestrantes"
+                android:textColor="#15438B"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 palestrantes"
+                android:textColor="#888888"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Botão de Favoritos (Rodapé) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_favoritos_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="#E6EBF5"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iv_profile_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_avatar_placeholder"
+                android:contentDescription="Perfil"
+                android:padding="10dp"
+                android:src="@drawable/ic_person"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_favoritos_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Favoritos"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tv_favoritos_subtitle"
+                app:layout_constraintStart_toEndOf="@id/iv_profile_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/tv_favoritos_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Acesse seus palestrantes favoritos"
+                android:textColor="#666666"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_favoritos_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_favoritos_title" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Ver favoritos"
+                android:src="@drawable/ic_chevron_right"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#15438B" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- RecyclerView da Lista -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPalestrantes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/cv_favoritos_footer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_section_header"
+        tools:listitem="@layout/item_palestrante" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

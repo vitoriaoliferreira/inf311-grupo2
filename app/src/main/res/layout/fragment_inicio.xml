@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9F9"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Cabeçalho Personalizado -->
+        <View
+            android:id="@+id/bgCabecalhoInicio"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:background="@drawable/bg_cabecalho"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btnMenuHamb"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="Menu"
+            android:src="@drawable/ic_menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/imgLogoDash"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="SUAS 360"
+            android:src="@drawable/ic_logo"
+            app:layout_constraintBottom_toBottomOf="@id/btnMenuHamb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnMenuHamb" />
+
+        <ImageView
+            android:id="@+id/btnNotificacoesDash"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Notificações"
+            android:src="@drawable/ic_notifications"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tvOlaUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="Olá, Usuário!"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgLogoDash" />
+
+        <TextView
+            android:id="@+id/tvBoasVindas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bem vindo(a) ao SUAS 360"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/tvOlaUsuario"
+            app:layout_constraintTop_toBottomOf="@id/tvOlaUsuario" />
+
+        <!-- Cartão de Destaque (Flutuante) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPalestraAgora"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:strokeWidth="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tvBoasVindas">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <!-- Header do Card -->
+                <ImageView
+                    android:id="@+id/ivIconCard"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_calendar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="#689F38" />
+
+                <TextView
+                    android:id="@+id/tvPalestraLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="PALESTRA"
+                    android:textColor="#689F38"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/ivIconCard"
+                    app:layout_constraintStart_toEndOf="@id/ivIconCard"
+                    app:layout_constraintTop_toTopOf="@id/ivIconCard" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_date_selected"
+                    android:backgroundTint="#EAF5E1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_schedule"
+                        app:tint="#689F38" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Agora"
+                        android:textColor="#689F38"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Conteúdo do Card -->
+                <LinearLayout
+                    android:id="@+id/llCardContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/ivIconCard">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minWidth="70dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="14:00"
+                            android:textColor="#689F38"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_location_on"
+                            android:drawablePadding="4dp"
+                            android:drawableTint="#888888"
+                            android:text="Sala A"
+                            android:textColor="#888888"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="80dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:background="#689F38" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Vínculos que Protegem"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Conexões humanas que sustentam..."
+                            android:textColor="#888888"
+                            android:textSize="12sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:background="@drawable/bg_avatar_placeholder"
+                                android:backgroundTint="#E0E0E0" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Mariana Torres"
+                                android:textColor="#212121"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnMaisInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#689F38"
+                    android:text="Mais informações"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    app:cornerRadius="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/llCardContent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Seção: Próximas palestras -->
+        <TextView
+            android:id="@+id/tvLabelProximas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:text="Próximas palestras"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardPalestraAgora" />
+
+        <TextView
+            android:id="@+id/btnVerProgramacao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="Ver programação"
+            android:textColor="#15438B"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tvLabelProximas"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvLabelProximas" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProximasPalestras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelProximas"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_proxima_palestra" />
+
+        <!-- Seção: Avisos recentes -->
+        <TextView
+            android:id="@+id/tvLabelAvisos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:text="Avisos recentes"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvProximasPalestras" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="Ver todos"
+            android:textColor="#15438B"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tvLabelAvisos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvLabelAvisos" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardAvisoDash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp"
+            app:cardBackgroundColor="#E6EBF5"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelAvisos">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/ivIconAviso"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_avatar_placeholder"
+                    android:backgroundTint="#15438B"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_campaign"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvAvisoTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Mudança de horário!"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/ivChevronAviso"
+                    app:layout_constraintStart_toEndOf="@id/ivIconAviso"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="A palestra das 15h teve seu horário alterado..."
+                    android:textColor="#666666"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@id/tvAvisoTitle"
+                    app:layout_constraintStart_toStartOf="@id/tvAvisoTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvAvisoTitle" />
+
+                <ImageView
+                    android:id="@+id/ivChevronAviso"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_chevron_right"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="#15438B" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Seção: Enquetes ativas -->
+        <TextView
+            android:id="@+id/tvLabelEnquetes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:text="Enquetes ativas"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardAvisoDash" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="Ver todos"
+            android:textColor="#15438B"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tvLabelEnquetes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvLabelEnquetes" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
+            app:cardBackgroundColor="#EAF5E1"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelEnquetes">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/ivIconEnquete"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_avatar_placeholder"
+                    android:backgroundTint="#689F38"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_poll"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvEnqueteTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Qual tema você mais deseja se aprofundar?"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/ivChevronEnquete"
+                    app:layout_constraintStart_toEndOf="@id/ivIconEnquete"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Encerra em 2h 15m"
+                    android:textColor="#666666"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@id/tvEnqueteTitle"
+                    app:layout_constraintStart_toStartOf="@id/tvEnqueteTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvEnqueteTitle" />
+
+                <ImageView
+                    android:id="@+id/ivChevronEnquete"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_chevron_right"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="#689F38" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

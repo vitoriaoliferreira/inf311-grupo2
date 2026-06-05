@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_cabecalho"
+    android:paddingBottom="24dp">
+
+    <!-- Logo no Topo Central -->
+    <ImageView
+        android:id="@+id/imgLogoCabecalho"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Logo SUAS 360"
+        android:src="@drawable/ic_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Seta Voltar à Esquerda -->
+    <ImageView
+        android:id="@+id/btnVoltarCabecalho"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Botão Voltar"
+        android:padding="4dp"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTituloCabecalho"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvTituloCabecalho"
+        app:tint="@color/white" />
+
+    <!-- Título Centralizado -->
+    <TextView
+        android:id="@+id/tvTituloCabecalho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLogoCabecalho"
+        tools:text="Título" />
+
+    <!-- Ícone Notificações (Sino) à Direita -->
+    <ImageView
+        android:id="@+id/btnNotificacoesCabecalho"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Notificações"
+        android:padding="4dp"
+        android:src="@drawable/ic_notifications"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTituloCabecalho"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvTituloCabecalho"
+        app:tint="@color/white" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

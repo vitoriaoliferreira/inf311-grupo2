@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9F9">
+
+    <!-- Inclusão do Cabeçalho Global -->
+    <include
+        android:id="@+id/cabecalhoGlobal"
+        layout="@layout/layout_cabecalho" />
+
+    <!-- Avatar Sobreposto (Ancorado no bottom do Cabeçalho Global) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardAvatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="50dp"
+        app:cardElevation="4dp"
+        app:strokeWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/cabecalhoGlobal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cabecalhoGlobal">
+
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="Foto de Perfil"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_gallery" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Ícone de Câmera -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:cardBackgroundColor="#689F38"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp"
+        app:strokeColor="#FFFFFF"
+        app:strokeWidth="2dp"
+        app:layout_constraintBottom_toBottomOf="@id/cardAvatar"
+        app:layout_constraintEnd_toEndOf="@id/cardAvatar">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="6dp"
+            android:contentDescription="Mudar Foto"
+            android:src="@drawable/ic_camera"
+            app:tint="@color/white" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Nome e Tag -->
+    <TextView
+        android:id="@+id/tvNomeUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Ana Silva"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardAvatar" />
+
+    <TextView
+        android:id="@+id/tvTagUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Participante"
+        android:textColor="#15438B"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNomeUsuario" />
+
+    <!-- ScrollView para o conteúdo -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTagUsuario">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="24dp">
+
+            <!-- Cartão de Contato -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include android:id="@+id/itemEmail" layout="@layout/item_menu_mais" />
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#E0E0E0" android:layout_marginStart="64dp" />
+                    <include android:id="@+id/itemTelefone" layout="@layout/item_menu_mais" />
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#E0E0E0" android:layout_marginStart="64dp" />
+                    <include android:id="@+id/itemCidade" layout="@layout/item_menu_mais" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Cartão de Configurações -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include android:id="@+id/itemFavoritos" layout="@layout/item_menu_mais" />
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#E0E0E0" android:layout_marginStart="64dp" />
+                    <include android:id="@+id/itemOffline" layout="@layout/item_menu_mais" />
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#E0E0E0" android:layout_marginStart="64dp" />
+                    <include android:id="@+id/itemSobre" layout="@layout/item_menu_mais" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Botão Sair -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSair"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="#689F38"
+                android:text="Sair"
+                android:textColor="#FFFFFF"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="28dp"
+                app:icon="@drawable/ic_logout"
+                app:iconGravity="textStart"
+                app:iconPadding="12dp"
+                app:iconTint="#FFFFFF" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <!-- Cabeçalho Global -->
+    <include
+        android:id="@+id/cabecalhoGlobal"
+        layout="@layout/layout_cabecalho" />
+
+    <!-- Search Field (Hidden by default as per design) -->
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:autofillHints="name"
+        android:background="@drawable/bg_card_rounded"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:drawablePadding="8dp"
+        android:hint="Pesquisar palestra..."
+        android:inputType="text"
+        android:padding="12dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cabecalhoGlobal" />
+
+    <!-- Dates Card (Anchored to the Global Header) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_dates"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="-24dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cabecalhoGlobal">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_dates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_data" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tv_current_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Segunda-Feira, 11 de maio"
+        android:textColor="@color/text_blue"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_dates" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_programacao"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_current_date_label"
+        tools:listitem="@layout/item_programacao" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
