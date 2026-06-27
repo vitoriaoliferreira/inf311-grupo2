@@ -26,9 +26,14 @@
         android:name="com.example.gesuas360.views.PalestrantesFragment"
         android:label="Palestrantes"
         tools:layout="@layout/fragment_palestrantes">
+
         <action
             android:id="@+id/action_palestrantes_to_detalhes"
             app:destination="@id/detalhesPalestranteFragment" />
+
+        <action
+            android:id="@+id/action_palestrantes_to_favoritos"
+            app:destination="@id/favoritosFragment" />
     </fragment>
 
     <fragment
@@ -60,5 +65,11 @@
         android:name="com.example.gesuas360.views.DetalhesPalestranteFragment"
         android:label="Detalhes do Palestrante"
         tools:layout="@layout/fragment_detalhes_palestrante" />
+
+    <fragment
+        android:id="@+id/favoritosFragment"
+        android:name="com.example.gesuas360.views.FavoritosFragment"
+        android:label="Favoritos"
+        tools:layout="@layout/fragment_favoritos" />
 
 </navigation>

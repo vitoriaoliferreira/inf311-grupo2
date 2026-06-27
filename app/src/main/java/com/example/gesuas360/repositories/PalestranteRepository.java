@@ -42,4 +42,18 @@ public class PalestranteRepository {
     public List<Palestrante> getPalestrantes() {
         return palestrantes;
     }
+
+    public void toggleFavorito(Palestrante palestrante) {
+        palestrante.setFavorito(!palestrante.isFavorito());
+    }
+
+    public List<Palestrante> getFavoritos() {
+        List<Palestrante> favoritos = new ArrayList<>();
+        for(Palestrante p : palestrantes) {
+            if(p.isFavorito()) {
+                favoritos.add(p);
+            }
+        }
+        return favoritos;
+    }
 }
