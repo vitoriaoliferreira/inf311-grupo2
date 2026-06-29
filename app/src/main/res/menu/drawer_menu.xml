@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/grupo_navegacao"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_programacao"
+            android:icon="@drawable/ic_calendar"
+            android:title="Programação" />
+        <item
+            android:id="@+id/nav_palestrantes"
+            android:icon="@drawable/ic_person_outline"
+            android:title="Palestrantes" />
+        <item
+            android:id="@+id/nav_mensagens"
+            android:icon="@drawable/ic_chat"
+            android:title="Mensagens" />
+        <item
+            android:id="@+id/nav_notificacoes"
+            android:icon="@drawable/ic_notifications"
+            android:title="Notificações" />
+        <item
+            android:id="@+id/nav_favoritos"
+            android:icon="@drawable/ic_bookmark"
+            android:title="Meus Favoritos" />
+    </group>
+
+    <group android:id="@+id/grupo_conta">
+        <item
+            android:id="@+id/nav_sair"
+            android:icon="@drawable/ic_logout"
+            android:title="Sair" />
+    </group>
+
+</menu>

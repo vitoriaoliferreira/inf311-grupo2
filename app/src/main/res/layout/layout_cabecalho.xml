@@ -48,18 +48,42 @@
         app:layout_constraintTop_toBottomOf="@+id/imgLogoCabecalho"
         tools:text="Título" />
 
-    <!-- Ícone Notificações (Sino) à Direita -->
-    <ImageView
-        android:id="@+id/btnNotificacoesCabecalho"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="Notificações"
-        android:padding="4dp"
-        android:src="@drawable/ic_notifications"
+    <!-- Sino de Notificações com Badge -->
+    <FrameLayout
+        android:id="@+id/fl_notif_badge_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvTituloCabecalho"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvTituloCabecalho"
-        app:tint="@color/white" />
+        app:layout_constraintTop_toTopOf="@+id/tvTituloCabecalho">
+
+        <ImageView
+            android:id="@+id/btnNotificacoesCabecalho"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:contentDescription="Notificações"
+            android:padding="4dp"
+            android:src="@drawable/ic_notifications"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_badge_notificacoes"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="top|end"
+            android:background="@drawable/bg_badge_notificacao"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="3"
+            tools:visibility="visible" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

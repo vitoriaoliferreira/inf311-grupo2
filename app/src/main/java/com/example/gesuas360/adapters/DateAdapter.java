@@ -1,25 +1,32 @@
 package com.example.gesuas360.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gesuas360.R;
+import com.example.gesuas360.models.DataEvento;
 
 import java.util.List;
 
 public class DateAdapter extends RecyclerView.Adapter<DateAdapter.ViewHolder> {
 
-    private List<String> dias;
+    public interface OnDateClickListener {
+        void onDateClick(DataEvento data);
+    }
+
+    private final List<DataEvento> dias;
+    private final OnDateClickListener listener;
     private int selectedPosition = 0;
 
-    public DateAdapter(List<String> dias) {
+    public DateAdapter(List<DataEvento> dias, OnDateClickListener listener) {
         this.dias = dias;
+        this.listener = listener;
     }
 
     @NonNull
@@ -31,19 +38,28 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String dia = dias.get(position);
-        holder.tvDia.setText(dia);
-        holder.tvMes.setText("Maio");
-        
-        if (position == selectedPosition) {
-            holder.itemView.setBackgroundResource(R.drawable.bg_date_selected);
-            holder.tvDia.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
-            holder.tvMes.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
+        DataEvento data = dias.get(position);
+        holder.tvDia.setText(data.getDia());
+        holder.tvMes.setText(data.getMes());
+
+        boolean selecionado = (position == selectedPosition);
+        holder.layoutData.setSelected(selecionado);
+
+        if (selecionado) {
+            holder.tvDia.setTextColor(Color.WHITE);
+            holder.tvMes.setTextColor(Color.WHITE);
         } else {
-            holder.itemView.setBackgroundResource(R.drawable.bg_card_rounded);
-            holder.tvDia.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.text_dark));
-            holder.tvMes.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), android.R.color.darker_gray));
+            holder.tvDia.setTextColor(Color.parseColor("#424242"));
+            holder.tvMes.setTextColor(Color.parseColor("#888888"));
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            int anterior = selectedPosition;
+            selectedPosition = holder.getAdapterPosition();
+            notifyItemChanged(anterior);
+            notifyItemChanged(selectedPosition);
+            if (listener != null) listener.onDateClick(data);
+        });
     }
 
     @Override
@@ -52,10 +68,12 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        View layoutData;
         TextView tvDia, tvMes;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            layoutData = itemView.findViewById(R.id.layoutData);
             tvDia = itemView.findViewById(R.id.tv_dia);
             tvMes = itemView.findViewById(R.id.tv_mes);
         }

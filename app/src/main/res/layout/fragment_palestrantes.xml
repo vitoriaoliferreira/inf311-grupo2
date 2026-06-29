@@ -43,13 +43,93 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_contagem_palestrantes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10 palestrantes"
                 android:textColor="#888888"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="6 palestrantes" />
         </LinearLayout>
     </LinearLayout>
+
+    <!-- Seção: Palestrantes Favoritos -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_palestrantes_favoritos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="4dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="#E6EBF5"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_section_header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="12dp"
+            android:paddingBottom="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="4dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_bookmark"
+                    app:tint="#15438B" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="Palestrantes Favoritos"
+                    android:textColor="#15438B"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_ver_todos_favoritos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ver todos"
+                    android:textColor="#15438B"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_palestrantes_favoritos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                tools:listitem="@layout/item_palestrante_compact" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- RecyclerView da Lista -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPalestrantes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/cv_favoritos_footer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_palestrantes_favoritos"
+        tools:listitem="@layout/item_palestrante" />
 
     <!-- Botão de Favoritos (Rodapé) -->
     <com.google.android.material.card.MaterialCardView
@@ -73,9 +153,9 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="@drawable/bg_avatar_placeholder"
-                android:contentDescription="Perfil"
+                android:contentDescription="Favoritos"
                 android:padding="10dp"
-                android:src="@drawable/ic_person"
+                android:src="@drawable/ic_bookmark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -86,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Favoritos"
+                android:text="Meus Favoritos"
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -99,7 +179,7 @@
                 android:id="@+id/tv_favoritos_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Acesse seus palestrantes favoritos"
+                android:text="Veja suas palestras e palestrantes salvos"
                 android:textColor="#666666"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -117,19 +197,6 @@
                 app:tint="#15438B" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </com.google.android.material.card.MaterialCardView>
-
-    <!-- RecyclerView da Lista -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPalestrantes"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/cv_favoritos_footer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_section_header"
-        tools:listitem="@layout/item_palestrante" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

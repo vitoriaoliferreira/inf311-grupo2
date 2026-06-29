@@ -1,11 +1,15 @@
 package com.example.gesuas360.adapters;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.ImageViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gesuas360.R;
@@ -27,6 +31,11 @@ public class PalestranteAdapter extends RecyclerView.Adapter<PalestranteAdapter.
         this.listener = listener;
     }
 
+    public void updateData(List<Palestrante> novaLista) {
+        this.palestrantes = novaLista;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,11 +49,26 @@ public class PalestranteAdapter extends RecyclerView.Adapter<PalestranteAdapter.
         holder.tvNome.setText(palestrante.getNome());
         holder.tvCargo.setText(palestrante.getCargo());
 
-        holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onItemClick(palestrante);
-            }
+        atualizarIconeFavorito(holder.ivFavorito, palestrante.isFavorito());
+
+        holder.ivFavorito.setOnClickListener(v -> {
+            palestrante.setFavorito(!palestrante.isFavorito());
+            atualizarIconeFavorito(holder.ivFavorito, palestrante.isFavorito());
         });
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onItemClick(palestrante);
+        });
+    }
+
+    private void atualizarIconeFavorito(ImageView iv, boolean favorito) {
+        if (favorito) {
+            iv.setImageResource(R.drawable.ic_bookmark);
+            ImageViewCompat.setImageTintList(iv, ColorStateList.valueOf(Color.parseColor("#4CAF50")));
+        } else {
+            iv.setImageResource(R.drawable.ic_bookmark_border);
+            ImageViewCompat.setImageTintList(iv, ColorStateList.valueOf(Color.parseColor("#888888")));
+        }
     }
 
     @Override
@@ -54,11 +78,13 @@ public class PalestranteAdapter extends RecyclerView.Adapter<PalestranteAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvNome, tvCargo;
+        ImageView ivFavorito;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNome = itemView.findViewById(R.id.tv_nome_palestrante);
             tvCargo = itemView.findViewById(R.id.tv_cargo_palestrante);
+            ivFavorito = itemView.findViewById(R.id.iv_favorito_palestrante);
         }
     }
 }

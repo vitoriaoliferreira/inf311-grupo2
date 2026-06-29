@@ -15,10 +15,16 @@ import java.util.List;
 
 public class ProximaPalestraAdapter extends RecyclerView.Adapter<ProximaPalestraAdapter.ViewHolder> {
 
-    private List<Palestra> palestras;
+    public interface OnItemClickListener {
+        void onItemClick(Palestra palestra);
+    }
 
-    public ProximaPalestraAdapter(List<Palestra> palestras) {
+    private final List<Palestra> palestras;
+    private final OnItemClickListener listener;
+
+    public ProximaPalestraAdapter(List<Palestra> palestras, OnItemClickListener listener) {
         this.palestras = palestras;
+        this.listener = listener;
     }
 
     @NonNull
@@ -32,10 +38,14 @@ public class ProximaPalestraAdapter extends RecyclerView.Adapter<ProximaPalestra
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Palestra palestra = palestras.get(position);
         holder.tvHora.setText(palestra.getHorario());
-        holder.tvData.setText("18/05");
+        holder.tvData.setText("Dia " + palestra.getData());
         holder.tvTitulo.setText(palestra.getTitulo());
         holder.tvLocal.setText(palestra.getLocal());
         holder.tvPalestrante.setText(palestra.getPalestranteNome());
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onItemClick(palestra);
+        });
     }
 
     @Override

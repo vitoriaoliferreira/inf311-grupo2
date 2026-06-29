@@ -1,6 +1,8 @@
 package com.example.gesuas360.models;
 
-public class Palestrante {
+import java.io.Serializable;
+
+public class Palestrante implements Serializable {
     private String nome;
     private String cargo;
     private String biografia;
@@ -11,15 +13,11 @@ public class Palestrante {
         this.biografia = biografia;
     }
 
-    public String getNome() {
-        return nome;
-    }
+    private boolean favorito = false;
 
-    public String getCargo() {
-        return cargo;
-    }
-
-    public String getBiografia() {
-        return biografia;
-    }
+    public String getNome() { return nome; }
+    public String getCargo() { return cargo; }
+    public String getBiografia() { return biografia; }
+    public boolean isFavorito() { return favorito; }
+    public void setFavorito(boolean favorito) { this.favorito = favorito; }
 }

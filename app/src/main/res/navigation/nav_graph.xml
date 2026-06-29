@@ -3,13 +3,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/inicioFragment">
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.gesuas360.views.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splash_to_login"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.gesuas360.views.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_to_inicio"
+            app:destination="@id/inicioFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/inicioFragment"
         android:name="com.example.gesuas360.views.InicioFragment"
         android:label="Início"
-        tools:layout="@layout/fragment_inicio" />
+        tools:layout="@layout/fragment_inicio">
+        <action
+            android:id="@+id/action_inicio_to_detalhes_palestra"
+            app:destination="@id/detalhesPalestraFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/programacaoFragment"
@@ -29,6 +57,9 @@
         <action
             android:id="@+id/action_palestrantes_to_detalhes"
             app:destination="@id/detalhesPalestranteFragment" />
+        <action
+            android:id="@+id/action_palestrantes_to_favoritos"
+            app:destination="@id/favoritosFragment" />
     </fragment>
 
     <fragment
@@ -41,13 +72,30 @@
         android:id="@+id/maisFragment"
         android:name="com.example.gesuas360.views.MaisFragment"
         android:label="Mais"
-        tools:layout="@layout/fragment_mais" />
+        tools:layout="@layout/fragment_mais">
+        <action
+            android:id="@+id/action_mais_to_favoritos"
+            app:destination="@id/favoritosFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/notificacoesFragment"
         android:name="com.example.gesuas360.views.NotificacoesFragment"
         android:label="Notificações"
         tools:layout="@layout/fragment_notificacoes" />
+
+    <fragment
+        android:id="@+id/favoritosFragment"
+        android:name="com.example.gesuas360.views.FavoritosFragment"
+        android:label="Meus Favoritos"
+        tools:layout="@layout/fragment_favoritos">
+        <action
+            android:id="@+id/action_favoritos_to_detalhes_palestra"
+            app:destination="@id/detalhesPalestraFragment" />
+        <action
+            android:id="@+id/action_favoritos_to_detalhes_palestrante"
+            app:destination="@id/detalhesPalestranteFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/detalhesPalestraFragment"
