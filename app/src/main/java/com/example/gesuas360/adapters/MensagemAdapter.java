@@ -59,13 +59,14 @@ public class MensagemAdapter extends RecyclerView.Adapter<MensagemAdapter.ViewHo
         TextView tvCategoria, tvTitulo, tvCorpo, tvHorario;
         ImageView imgIconeFundo;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvCategoria = itemView.findViewById(R.id.tv_categoria);
-            tvTitulo = itemView.findViewById(R.id.tv_titulo);
-            tvCorpo = itemView.findViewById(R.id.tv_corpo);
-            tvHorario = itemView.findViewById(R.id.tv_horario);
-            imgIconeFundo = itemView.findViewById(R.id.imgIconeFundo);
+        public ViewHolder(@NonNull View itemVixew) {
+            super(itemVixew);
+
+            tvCategoria = itemVixew.findViewById(R.id.tv_categoria);
+            tvTitulo = itemVixew.findViewById(R.id.tv_titulo);
+            tvCorpo = itemVixew.findViewById(R.id.tv_corpo);
+            tvHorario = itemVixew.findViewById(R.id.tv_horario);
+            imgIconeFundo = itemVixew.findViewById(R.id.imgIconeFundo);
         }
     }
 }
