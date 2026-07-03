@@ -18,8 +18,14 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.ViewHolder> {
     private List<String> dias;
     private int selectedPosition = 0;
 
-    public DateAdapter(List<String> dias) {
+    private OnDateClickListener listener;
+    public interface OnDateClickListener {
+        void onDateClick(int dia);
+    }
+
+    public DateAdapter(List<String> dias, OnDateClickListener listener) {
         this.dias = dias;
+        this.listener = listener;
     }
 
     @NonNull
@@ -32,18 +38,41 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String dia = dias.get(position);
+
         holder.tvDia.setText(dia);
         holder.tvMes.setText("Maio");
-        
+
         if (position == selectedPosition) {
             holder.itemView.setBackgroundResource(R.drawable.bg_date_selected);
-            holder.tvDia.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
-            holder.tvMes.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
+            holder.tvDia.setTextColor(
+                    ContextCompat.getColor(holder.itemView.getContext(), R.color.white)
+            );
+            holder.tvMes.setTextColor(
+                    ContextCompat.getColor(holder.itemView.getContext(), R.color.white)
+            );
         } else {
             holder.itemView.setBackgroundResource(R.drawable.bg_card_rounded);
-            holder.tvDia.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.text_dark));
-            holder.tvMes.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), android.R.color.darker_gray));
+            holder.tvDia.setTextColor(
+                    ContextCompat.getColor(holder.itemView.getContext(), R.color.text_dark)
+            );
+            holder.tvMes.setTextColor(
+                    ContextCompat.getColor(holder.itemView.getContext(), android.R.color.darker_gray)
+            );
         }
+
+        // Clique no dia
+        holder.itemView.setOnClickListener(v -> {
+
+            int oldPosition = selectedPosition;
+            selectedPosition = holder.getAdapterPosition();
+
+            notifyItemChanged(oldPosition);
+            notifyItemChanged(selectedPosition);
+
+            if (listener != null) {
+                listener.onDateClick(Integer.parseInt(dia));
+            }
+        });
     }
 
     @Override
