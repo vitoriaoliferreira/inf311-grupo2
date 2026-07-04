@@ -331,6 +331,7 @@
             app:layout_constraintTop_toBottomOf="@id/rvProximasPalestras" />
 
         <TextView
+            android:id="@+id/btnVerTodosAvisos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
@@ -385,8 +386,11 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/tvAvisoBody"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
                     android:text="A palestra das 15h teve seu horário alterado..."
                     android:textColor="#666666"
                     android:textSize="12sp"
@@ -422,10 +426,11 @@
             app:layout_constraintTop_toBottomOf="@id/cardAvisoDash" />
 
         <TextView
+            android:id="@+id/btnVerTodosEnquetes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:text="Ver todos"
+            android:text="Ver todas"
             android:textColor="#15438B"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/tvLabelEnquetes"
@@ -433,6 +438,7 @@
             app:layout_constraintTop_toTopOf="@id/tvLabelEnquetes" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardEnqueteDash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -477,6 +483,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/tvEnqueteInfo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Encerra em 2h 15m"

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.os.BundleCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,7 +37,7 @@ public class DetalhesPalestranteFragment extends BaseFragment {
         Bundle args = getArguments();
         if (args == null) return;
 
-        Palestrante palestrante = (Palestrante) args.getSerializable(ARG_PALESTRANTE);
+        Palestrante palestrante = BundleCompat.getSerializable(args, ARG_PALESTRANTE, Palestrante.class);
         if (palestrante == null) return;
 
         TextView tvNome = view.findViewById(R.id.tvNomeDetalhe);

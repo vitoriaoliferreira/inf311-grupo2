@@ -16,8 +16,12 @@ import com.example.gesuas360.MainActivity;
 import com.example.gesuas360.R;
 import com.example.gesuas360.SessaoUsuario;
 import com.example.gesuas360.adapters.ProximaPalestraAdapter;
+import com.example.gesuas360.models.Enquete;
+import com.example.gesuas360.models.Notificacao;
 import com.example.gesuas360.models.Palestra;
 import com.example.gesuas360.models.Participante;
+import com.example.gesuas360.repositories.EnqueteRepository;
+import com.example.gesuas360.repositories.NotificacaoRepository;
 import com.example.gesuas360.repositories.PalestraRepository;
 
 import java.util.List;
@@ -42,6 +46,8 @@ public class InicioFragment extends BaseFragment {
         configurarSaudacao(view);
         configurarPalestraAgora(view);
         configurarProximasPalestras(view);
+        configurarAvisosRecentes(view);
+        configurarEnquetesAtivas(view);
         configurarBotoes(view);
     }
 
@@ -111,6 +117,52 @@ public class InicioFragment extends BaseFragment {
                 Navigation.findNavController(view).navigate(R.id.action_inicio_to_detalhes_palestra, bundle);
             }));
         }
+    }
+
+    private void configurarAvisosRecentes(View view) {
+        // Preenche o card de aviso com a notificação mais recente (índice 0 do repositório).
+        List<Notificacao> notificacoes = NotificacaoRepository.getInstance().getNotificacoes();
+        if (!notificacoes.isEmpty()) {
+            Notificacao maisRecente = notificacoes.get(0);
+
+            TextView tvTitulo = view.findViewById(R.id.tvAvisoTitle);
+            TextView tvCorpo  = view.findViewById(R.id.tvAvisoBody);
+            if (tvTitulo != null) tvTitulo.setText(maisRecente.getTitulo());
+            if (tvCorpo != null)  tvCorpo.setText(maisRecente.getCorpo());
+        }
+
+        // Clicar no card ou em "Ver todos" abre a página de notificações.
+        View.OnClickListener abrirNotificacoes = v ->
+                Navigation.findNavController(v).navigate(R.id.notificacoesFragment);
+
+        View cardAviso = view.findViewById(R.id.cardAvisoDash);
+        if (cardAviso != null) cardAviso.setOnClickListener(abrirNotificacoes);
+
+        View btnVerTodos = view.findViewById(R.id.btnVerTodosAvisos);
+        if (btnVerTodos != null) btnVerTodos.setOnClickListener(abrirNotificacoes);
+    }
+
+    private void configurarEnquetesAtivas(View view) {
+        // Preenche o card de destaque com a enquete ativa mais recente.
+        List<Enquete> ativas = EnqueteRepository.getInstance().getEnquetesAtivas();
+        if (!ativas.isEmpty()) {
+            Enquete destaque = ativas.get(0);
+
+            TextView tvTitulo = view.findViewById(R.id.tvEnqueteTitle);
+            TextView tvInfo   = view.findViewById(R.id.tvEnqueteInfo);
+            if (tvTitulo != null) tvTitulo.setText(destaque.getPergunta());
+            if (tvInfo != null)   tvInfo.setText(destaque.getEncerraEm());
+        }
+
+        // Clicar no card ou em "Ver todas" abre a tela de enquetes ativas.
+        View.OnClickListener abrirEnquetes = v ->
+                Navigation.findNavController(v).navigate(R.id.enquetesFragment);
+
+        View cardEnquete = view.findViewById(R.id.cardEnqueteDash);
+        if (cardEnquete != null) cardEnquete.setOnClickListener(abrirEnquetes);
+
+        View btnVerTodas = view.findViewById(R.id.btnVerTodosEnquetes);
+        if (btnVerTodas != null) btnVerTodas.setOnClickListener(abrirEnquetes);
     }
 
     private void configurarBotoes(View view) {

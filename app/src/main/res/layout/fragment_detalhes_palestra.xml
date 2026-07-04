@@ -219,6 +219,75 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Secção Enquetes desta palestra -->
+            <TextView
+                android:id="@+id/tvLabelEnquetesPalestra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Enquetes desta palestra"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvDetalhePalestrante" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvEnquetesPalestra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="-8dp"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tvLabelEnquetesPalestra"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_enquete" />
+
+            <!-- Secção Avaliação (visível ao final da palestra) -->
+            <TextView
+                android:id="@+id/tvLabelAvaliar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Avaliação"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvEnquetesPalestra" />
+
+            <TextView
+                android:id="@+id/tvAvaliarSubtitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="A palestra terminou. Conte o que achou dela e do palestrante."
+                android:textColor="#666666"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/tvLabelAvaliar" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAvaliarPalestra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#15438B"
+                android:text="Avaliar palestra e palestrante"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:cornerRadius="24dp"
+                app:icon="@drawable/ic_star"
+                app:iconGravity="textStart"
+                app:iconTint="#FFFFFF"
+                app:layout_constraintTop_toBottomOf="@id/tvAvaliarSubtitulo" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

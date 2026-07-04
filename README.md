@@ -17,6 +17,8 @@ Aplicativo Android para o evento **SUAS 360**, permitindo que participantes acom
    - [Presença](#45-presença)
    - [Notificações](#46-notificações)
    - [Mensagens](#47-mensagens)
+   - [Enquetes](#48-enquetes)
+   - [Avaliações](#49-avaliações)
 5. [Notificações Push (FCM)](#5-notificações-push-fcm)
 6. [Modelos de Dados](#6-modelos-de-dados)
 7. [Como Substituir os Mocks](#7-como-substituir-os-mocks)
@@ -439,6 +441,124 @@ Requer `Authorization: Bearer {token}`.
 
 ---
 
+### 4.8 Enquetes
+
+Enquetes de participação em tempo real. Cada enquete pode estar **vinculada a uma palestra** (aparece na tela de detalhes daquela palestra) ou ser **geral** (sem vínculo). Todas as enquetes ativas aparecem na tela **Enquetes ativas**, acessível pela home ("Ver todas") e pelo menu lateral.
+
+> **Vínculo com a palestra:** feito pelo campo `palestraTitulo` — o mesmo padrão de ligação por texto usado no restante do app (palestrante ↔ palestra por nome). Recomenda-se que o backend exponha um `palestraId` estável; enquanto o modelo `Palestra` não possuir id, o vínculo é resolvido pelo título. Enquetes gerais têm `palestraTitulo: null`.
+
+Todos os endpoints abaixo requerem `Authorization: Bearer {token}`.
+
+---
+
+#### `GET /api/enquetes`
+
+Retorna todas as enquetes **ativas** do evento (usado na tela "Enquetes ativas" e no card de destaque da home).
+
+**Response 200:**
+```json
+[
+  {
+    "id":            "ENQ001",
+    "palestraTitulo": "Vínculos que Protegem",
+    "pergunta":      "Qual aspecto dos vínculos comunitários você considera mais urgente?",
+    "encerraEm":     "Encerra em 1h 20m",
+    "ativa":         true,
+    "jaVotou":       false,
+    "opcaoVotadaId": null,
+    "opcoes": [
+      { "id": "OP1", "texto": "Rede de proteção familiar", "votos": 12 },
+      { "id": "OP2", "texto": "Articulação territorial",    "votos": 8  },
+      { "id": "OP3", "texto": "Participação social",        "votos": 5  }
+    ]
+  }
+]
+```
+
+> `encerraEm` é um rótulo já formatado para exibição. `jaVotou`/`opcaoVotadaId` refletem o estado do participante logado — quando `jaVotou` é `true`, o app exibe os resultados (percentuais) em vez dos botões de voto.
+
+**Arquivo:** `EnqueteRepository.java` → construtor `enquetes`
+
+---
+
+#### `GET /api/palestras/{palestraId}/enquetes`
+
+Retorna as enquetes **ativas** vinculadas a uma palestra específica. Usado na tela de detalhes da palestra.
+
+**Response 200:** mesmo formato de `GET /api/enquetes`, filtrado pela palestra.
+
+**Arquivo:** `EnqueteRepository.java` → `getEnquetesByPalestra()`
+
+---
+
+#### `POST /api/enquetes/{enqueteId}/votar`
+
+Registra o voto do participante em uma opção da enquete.
+
+**Request:**
+```json
+{ "opcaoId": "OP1" }
+```
+
+**Response 200:**
+```json
+{ "ok": true, "totalVotos": 26 }
+```
+
+**Erros:**
+| Status | Corpo |
+|---|---|
+| 409 | `{ "erro": "Participante já votou nesta enquete." }` |
+| 404 | `{ "erro": "Enquete ou opção não encontrada." }` |
+
+**Regra no app:** após um voto bem-sucedido, os botões de opção são substituídos por barras de resultado com o percentual de cada opção; a opção escolhida é destacada.
+
+**Arquivo:** `EnqueteRepository.java` → `votar()`
+
+---
+
+### 4.9 Avaliações
+
+Ao final de uma palestra, o participante pode avaliar a **palestra** e o **palestrante** (notas de 1 a 5) e deixar um comentário. Na tela de detalhes da palestra, o botão "Avaliar palestra e palestrante" fica visível quando a palestra já terminou.
+
+Requer `Authorization: Bearer {token}`.
+
+---
+
+#### `POST /api/avaliacoes`
+
+**Request:**
+```json
+{
+  "participanteId":   "P001",
+  "participanteNome": "Maria Silva",
+  "palestraTitulo":   "Vínculos que Protegem",
+  "palestraData":     "11",
+  "palestranteNome":  "Mariana Torres",
+  "notaPalestra":     5,
+  "notaPalestrante":  4,
+  "comentario":       "Excelente palestra, muito didática."
+}
+```
+
+> `notaPalestra` e `notaPalestrante` vão de **1 a 5**. `notaPalestrante` é `0` quando a palestra não tem palestrante (ex.: credenciamento, abertura), caso em que o app oculta a nota do palestrante. `comentario` pode ser string vazia.
+
+**Response 200:**
+```json
+{ "ok": true, "mensagem": "Avaliação registrada. Obrigado!" }
+```
+
+**Erros:**
+| Status | Corpo |
+|---|---|
+| 409 | `{ "erro": "Você já avaliou esta palestra." }` |
+
+**Regra no app:** o botão só habilita o envio depois de o participante dar a nota da palestra (e do palestrante, quando houver). Ver `MODO_DEMO_AVALIACAO` na [Seção 8](#8-variáveis-de-configuração-do-app) para forçar a exibição do botão durante a demonstração.
+
+**Arquivo:** `AvaliacaoRepository.java` → `enviarAvaliacao()`
+
+---
+
 ## 5. Notificações Push (FCM)
 
 ### Fluxo completo
@@ -604,6 +724,50 @@ Content-Type: application/json
 }
 ```
 
+### Enquete
+
+```json
+{
+  "id":             "ENQ001",
+  "palestraTitulo": "Vínculos que Protegem",
+  "pergunta":       "Qual aspecto dos vínculos comunitários você considera mais urgente?",
+  "encerraEm":      "Encerra em 1h 20m",
+  "ativa":          true,
+  "jaVotou":        false,
+  "opcaoVotadaId":  null,
+  "opcoes": [
+    { "id": "OP1", "texto": "Rede de proteção familiar", "votos": 12 }
+  ]
+}
+```
+
+> `palestraTitulo: null` indica uma enquete geral (não vinculada a uma palestra).
+
+### OpcaoEnquete
+
+```json
+{
+  "id":    "OP1",
+  "texto": "Rede de proteção familiar",
+  "votos": 12
+}
+```
+
+### Avaliacao (enviada em POST /api/avaliacoes)
+
+```json
+{
+  "participanteId":   "P001",
+  "participanteNome": "Maria Silva",
+  "palestraTitulo":   "Vínculos que Protegem",
+  "palestraData":     "11",
+  "palestranteNome":  "Mariana Torres",
+  "notaPalestra":     5,
+  "notaPalestrante":  4,
+  "comentario":       "Excelente palestra, muito didática."
+}
+```
+
 ---
 
 ## 7. Como Substituir os Mocks
@@ -667,6 +831,10 @@ public void login(String email, String senha, AuthCallback callback) {
 | `PUT /api/notificacoes/{id}/lida` | `NotificacaoRepository.java` → `marcarComoLida()` |
 | `PUT /api/notificacoes/lidas` | `NotificacaoRepository.java` → `marcarTodasComoLidas()` |
 | `GET /api/mensagens` | `MensagemRepository.java` → construtor `mensagens` |
+| `GET /api/enquetes` | `EnqueteRepository.java` → construtor `enquetes` |
+| `GET /api/palestras/{palestraId}/enquetes` | `EnqueteRepository.java` → `getEnquetesByPalestra()` |
+| `POST /api/enquetes/{enqueteId}/votar` | `EnqueteRepository.java` → `votar()` |
+| `POST /api/avaliacoes` | `AvaliacaoRepository.java` → `enviarAvaliacao()` |
 | FCM push (backend → app) | `GeSuasMessagingService.java` → `onMessageReceived()` |
 
 ---
@@ -675,7 +843,8 @@ public void login(String email, String senha, AuthCallback callback) {
 
 | Constante | Arquivo | Valor padrão | Descrição |
 |---|---|---|---|
-| `MODO_DEMO` | `DetalhesPalestraFragment.java:187` | `true` | `true` = botão "Confirmar Presença" sempre disponível. Para produção, setar `false`. |
+| `MODO_DEMO` | `DetalhesPalestraFragment.java` | `true` | `true` = botão "Confirmar Presença" sempre disponível. Para produção, setar `false`. |
+| `MODO_DEMO_AVALIACAO` | `DetalhesPalestraFragment.java` | `true` | `true` = botão "Avaliar palestra e palestrante" sempre visível. Para produção, setar `false` (aparece só 90 min após o início da palestra). |
 | `DELAY_SIMULADO_MS` | `AuthRepository.java:38` | `1200` | Delay em ms do mock de login. Remover ao integrar API real. |
 | `CANAL_ID` | `GeSuasMessagingService.java:28` | `"gesuas_channel"` | ID do canal de notificação Android. Deve coincidir com o `default_notification_channel_id` no `AndroidManifest.xml`. |
 | `google-services.json` | `app/` | placeholder | Substituir pelo arquivo real do Firebase Console para ativar FCM. |

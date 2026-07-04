@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_chat"
             android:title="Mensagens" />
         <item
+            android:id="@+id/nav_enquetes"
+            android:icon="@drawable/ic_poll"
+            android:title="Enquetes" />
+        <item
             android:id="@+id/nav_notificacoes"
             android:icon="@drawable/ic_notifications"
             android:title="Notificações" />

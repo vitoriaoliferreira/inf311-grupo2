@@ -12,18 +12,27 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.os.BundleCompat;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gesuas360.R;
 import com.example.gesuas360.SessaoUsuario;
+import com.example.gesuas360.adapters.EnqueteAdapter;
 import com.example.gesuas360.models.ConfirmacaoPresenca;
+import com.example.gesuas360.models.Enquete;
+import com.example.gesuas360.models.OpcaoEnquete;
 import com.example.gesuas360.models.Palestra;
 import com.example.gesuas360.models.Participante;
+import com.example.gesuas360.repositories.EnqueteRepository;
 import com.example.gesuas360.repositories.PresencaRepository;
 import com.google.android.material.button.MaterialButton;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class DetalhesPalestraFragment extends BaseFragment {
 
@@ -33,6 +42,8 @@ public class DetalhesPalestraFragment extends BaseFragment {
     private MaterialButton btnConfirmar;
     private TextView tvStatus;
     private boolean presencaConfirmada = false;
+
+    private EnqueteAdapter enqueteAdapter;
 
     private ActivityResultLauncher<ScanOptions> qrLauncher;
 
@@ -65,7 +76,7 @@ public class DetalhesPalestraFragment extends BaseFragment {
         Bundle args = getArguments();
         if (args == null) return;
 
-        palestra = (Palestra) args.getSerializable(ARG_PALESTRA);
+        palestra = BundleCompat.getSerializable(args, ARG_PALESTRA, Palestra.class);
         if (palestra == null) return;
 
         btnConfirmar = view.findViewById(R.id.btnConfirmarPresenca);
@@ -73,6 +84,8 @@ public class DetalhesPalestraFragment extends BaseFragment {
 
         preencherDetalhes(view);
         configurarBotaoConfirmar();
+        configurarEnquetes(view);
+        configurarAvaliacao(view);
     }
 
     @Override
@@ -108,6 +121,88 @@ public class DetalhesPalestraFragment extends BaseFragment {
         int vis = temPalestrante ? View.VISIBLE : View.GONE;
         if (secPalestrante != null) secPalestrante.setVisibility(vis);
         if (cardPalestrante != null) cardPalestrante.setVisibility(vis);
+    }
+
+    // ── Enquetes da palestra ───────────────────────────────────────────────────
+
+    private void configurarEnquetes(View view) {
+        TextView tvLabel = view.findViewById(R.id.tvLabelEnquetesPalestra);
+        RecyclerView rv  = view.findViewById(R.id.rvEnquetesPalestra);
+        if (rv == null) return;
+
+        List<Enquete> enquetes = EnqueteRepository.getInstance()
+                .getEnquetesByPalestra(palestra.getTitulo());
+
+        boolean temEnquetes = !enquetes.isEmpty();
+        if (tvLabel != null) tvLabel.setVisibility(temEnquetes ? View.VISIBLE : View.GONE);
+        rv.setVisibility(temEnquetes ? View.VISIBLE : View.GONE);
+        if (!temEnquetes) return;
+
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        // Vínculo com a palestra é implícito aqui, então não repetimos o título.
+        enqueteAdapter = new EnqueteAdapter(enquetes, false, this::votarEnquete);
+        rv.setAdapter(enqueteAdapter);
+    }
+
+    private void votarEnquete(Enquete enquete, OpcaoEnquete opcao) {
+        EnqueteRepository.getInstance().votar(enquete.getId(), opcao.getId(),
+                new EnqueteRepository.EnqueteCallback() {
+                    @Override
+                    public void onSuccess(String mensagem) {
+                        if (enqueteAdapter != null) enqueteAdapter.notifyDataSetChanged();
+                        if (getContext() != null)
+                            Toast.makeText(requireContext(), mensagem, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(String mensagem) {
+                        if (getContext() != null)
+                            Toast.makeText(requireContext(), mensagem, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    // ── Avaliação (ao final da palestra) ───────────────────────────────────────
+
+    /**
+     * MODO_DEMO_AVALIACAO = true → botão "Avaliar" sempre visível (para demonstração).
+     * Em produção, a avaliação só aparece após o término da palestra.
+     */
+    private static final boolean MODO_DEMO_AVALIACAO = true;
+
+    private void configurarAvaliacao(View view) {
+        View label     = view.findViewById(R.id.tvLabelAvaliar);
+        View subtitulo = view.findViewById(R.id.tvAvaliarSubtitulo);
+        MaterialButton btnAvaliar = view.findViewById(R.id.btnAvaliarPalestra);
+        if (btnAvaliar == null) return;
+
+        boolean encerrada = isPalestraEncerrada(palestra.getHorario());
+        int vis = encerrada ? View.VISIBLE : View.GONE;
+        if (label != null) label.setVisibility(vis);
+        if (subtitulo != null) subtitulo.setVisibility(vis);
+        btnAvaliar.setVisibility(vis);
+
+        btnAvaliar.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(AvaliacaoFragment.ARG_PALESTRA, palestra);
+            Navigation.findNavController(v).navigate(R.id.avaliacaoFragment, bundle);
+        });
+    }
+
+    /** Uma palestra é considerada encerrada 90 min após o seu horário de início. */
+    private boolean isPalestraEncerrada(String horario) {
+        if (MODO_DEMO_AVALIACAO) return true;
+
+        if (horario == null || !horario.contains(":")) return false;
+        try {
+            String[] partes = horario.split(":");
+            int totalEvento = Integer.parseInt(partes[0]) * 60 + Integer.parseInt(partes[1]);
+            Calendar agora = Calendar.getInstance();
+            int totalAgora = agora.get(Calendar.HOUR_OF_DAY) * 60 + agora.get(Calendar.MINUTE);
+            return totalAgora > (totalEvento + 90);
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     // ── Botão de confirmação ───────────────────────────────────────────────────

@@ -85,6 +85,18 @@
         tools:layout="@layout/fragment_notificacoes" />
 
     <fragment
+        android:id="@+id/enquetesFragment"
+        android:name="com.example.gesuas360.views.EnquetesFragment"
+        android:label="Enquetes"
+        tools:layout="@layout/fragment_enquetes" />
+
+    <fragment
+        android:id="@+id/avaliacaoFragment"
+        android:name="com.example.gesuas360.views.AvaliacaoFragment"
+        android:label="Avaliação"
+        tools:layout="@layout/fragment_avaliacao" />
+
+    <fragment
         android:id="@+id/favoritosFragment"
         android:name="com.example.gesuas360.views.FavoritosFragment"
         android:label="Meus Favoritos"
