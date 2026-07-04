@@ -47,7 +47,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Card Único da Lista -->
+    <!-- Card da Lista -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_notif_container"
         android:layout_width="match_parent"
@@ -67,6 +67,17 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_notificacao" />
+
+        <TextView
+            android:id="@+id/tv_empty_notificacoes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="32dp"
+            android:text="Nenhuma notificação por enquanto"
+            android:textColor="#888888"
+            android:textSize="14sp"
+            android:visibility="gone" />
 
     </com.google.android.material.card.MaterialCardView>
 

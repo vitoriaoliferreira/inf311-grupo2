@@ -7,22 +7,21 @@
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="8dp"
     app:cardBackgroundColor="#FFFFFF"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="12dp"
     app:cardElevation="2dp"
     app:strokeWidth="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="16dp">
 
-        <!-- Coluna Esquerda: Tempo (Hora e Data) -->
+        <!-- Coluna esquerda: hora + dia -->
         <LinearLayout
             android:id="@+id/ll_time_section"
-            android:layout_width="wrap_content"
+            android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:minWidth="60dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,8 +31,8 @@
                 android:id="@+id/tv_hora_proxima"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#689F38"
-                android:textSize="16sp"
+                android:textColor="#15438B"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 tools:text="16:00" />
 
@@ -41,54 +40,66 @@
                 android:id="@+id/tv_data_proxima"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:textColor="#888888"
-                android:textSize="14sp"
-                tools:text="18/05" />
+                android:textSize="11sp"
+                tools:text="Dia 11" />
         </LinearLayout>
 
-        <!-- Linha Divisória Vertical -->
+        <!-- Divisória vertical verde -->
         <View
             android:id="@+id/v_divider_proxima"
-            android:layout_width="1dp"
+            android:layout_width="1.5dp"
             android:layout_height="0dp"
             android:layout_marginStart="12dp"
-            android:background="#E0E0E0"
+            android:background="#689F38"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/ll_time_section"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Coluna Central: Título e Detalhes -->
+        <!-- Ícone favorito -->
+        <ImageView
+            android:id="@+id/iv_bookmark_proxima"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="Favoritar"
+            android:src="@drawable/ic_bookmark_border"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#888888" />
+
+        <!-- Coluna direita: conteúdo -->
         <LinearLayout
-            android:id="@+id/ll_content_section"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="8dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/iv_bookmark_proxima"
+            app:layout_constraintEnd_toStartOf="@id/iv_bookmark_proxima"
             app:layout_constraintStart_toEndOf="@id/v_divider_proxima"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/tv_titulo_proxima"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:textColor="#000000"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 tools:text="Vigilância socioassistencial no SUAS" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <!-- Local -->
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="12dp"
@@ -100,43 +111,34 @@
                     android:id="@+id/tv_local_proxima"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
+                    android:layout_marginStart="3dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textColor="#888888"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     tools:text="Auditório do CCE" />
 
-                <!-- Palestrante -->
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="12dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="10dp"
                     android:contentDescription="Palestrante"
                     android:src="@drawable/ic_person"
                     app:tint="#15438B" />
 
                 <TextView
                     android:id="@+id/tv_palestrante_proxima"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textColor="#15438B"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     tools:text="João Pereira" />
-
             </LinearLayout>
         </LinearLayout>
-
-        <!-- Coluna Direita: Ícone de Marcador -->
-        <ImageView
-            android:id="@+id/iv_bookmark_proxima"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="Favoritar"
-            android:src="@drawable/ic_bookmark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="#689F38" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -13,11 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gesuas360.R;
 import com.example.gesuas360.adapters.ProgramacaoAdapter;
+import com.example.gesuas360.models.Palestra;
 import com.example.gesuas360.models.Palestrante;
 import com.example.gesuas360.repositories.PalestraRepository;
-import com.example.gesuas360.repositories.PalestranteRepository;
+
+import java.util.List;
 
 public class DetalhesPalestranteFragment extends BaseFragment {
+
+    public static final String ARG_PALESTRANTE = "palestrante";
 
     @Nullable
     @Override
@@ -29,31 +33,32 @@ public class DetalhesPalestranteFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Bundle args = getArguments();
+        if (args == null) return;
+
+        Palestrante palestrante = (Palestrante) args.getSerializable(ARG_PALESTRANTE);
+        if (palestrante == null) return;
+
         TextView tvNome = view.findViewById(R.id.tvNomeDetalhe);
         TextView tvCargo = view.findViewById(R.id.tvCargoDetalhe);
         TextView tvBio = view.findViewById(R.id.tvBioDetalhe);
         RecyclerView rvPalestras = view.findViewById(R.id.rvPalestrasPalestrante);
 
-        String nomePalestrante = "";
-        if (getArguments() != null) {
-            nomePalestrante = getArguments().getString("nomePalestrante", "");
-        }
+        tvNome.setText(palestrante.getNome());
+        tvCargo.setText(palestrante.getCargo());
+        tvBio.setText(palestrante.getBiografia());
 
-        Palestrante palestrante = PalestranteRepository.getInstance().getPalestrantePorNome(nomePalestrante);
-
-        if (palestrante != null) {
-            tvNome.setText(palestrante.getNome());
-
-            tvCargo.setText(palestrante.getCargo());
-            tvBio.setText(palestrante.getBiografia());
-        }
+        List<Palestra> palestrasDoFalante = PalestraRepository.getInstance()
+                .getPalestrasDoPalestrante(palestrante.getNome());
 
         if (rvPalestras != null) {
             rvPalestras.setLayoutManager(new LinearLayoutManager(getContext()));
-            rvPalestras.setAdapter(new ProgramacaoAdapter(
-                    PalestraRepository.getInstance().getPalestras().subList(2, 3),
-                    null
-            ));
+            rvPalestras.setAdapter(new ProgramacaoAdapter(palestrasDoFalante, null));
+
+            TextView tvLabelPalestras = view.findViewById(R.id.tvLabelPalestras);
+            if (tvLabelPalestras != null) {
+                tvLabelPalestras.setVisibility(palestrasDoFalante.isEmpty() ? View.GONE : View.VISIBLE);
+            }
         }
     }
 

@@ -1,15 +1,15 @@
 package com.example.gesuas360.adapters;
 
-import android.content.Context; // Import adicionado
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView; // Import adicionado
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat; // Import adicionado
+import androidx.core.widget.ImageViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gesuas360.R;
@@ -21,20 +21,19 @@ public class PalestranteAdapter extends RecyclerView.Adapter<PalestranteAdapter.
 
     private List<Palestrante> palestrantes;
     private OnItemClickListener listener;
-    private OnFavoritoClickListener favoritoListener;
 
     public interface OnItemClickListener {
         void onItemClick(Palestrante palestrante);
     }
 
-    public interface OnFavoritoClickListener {
-        void onFavoritoClick(Palestrante palestrante, int position);
-    }
-
-    public PalestranteAdapter(List<Palestrante> palestrantes, OnItemClickListener listener, OnFavoritoClickListener favoritoListener) {
+    public PalestranteAdapter(List<Palestrante> palestrantes, OnItemClickListener listener) {
         this.palestrantes = palestrantes;
         this.listener = listener;
-        this.favoritoListener = favoritoListener;
+    }
+
+    public void updateData(List<Palestrante> novaLista) {
+        this.palestrantes = novaLista;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -50,39 +49,31 @@ public class PalestranteAdapter extends RecyclerView.Adapter<PalestranteAdapter.
         holder.tvNome.setText(palestrante.getNome());
         holder.tvCargo.setText(palestrante.getCargo());
 
-        Context context = holder.itemView.getContext();
-
-        // atualiza ícone favorito
-        if (palestrante.isFavorito()) {
-            holder.ivFavorito.setImageResource(R.drawable.ic_bookmark);
-            holder.ivFavorito.setColorFilter(Color.parseColor("#4CAF50"));
-        } else {
-            holder.ivFavorito.setImageResource(R.drawable.ic_bookmark_border);
-            holder.ivFavorito.setColorFilter(Color.parseColor("#9E9E9E"));
-        }
-
-        holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onItemClick(palestrante);
-            }
-        });
+        atualizarIconeFavorito(holder.ivFavorito, palestrante.isFavorito());
 
         holder.ivFavorito.setOnClickListener(v -> {
-            if (favoritoListener != null) {
-                favoritoListener.onFavoritoClick(palestrante, position);
-            }
+            palestrante.setFavorito(!palestrante.isFavorito());
+            atualizarIconeFavorito(holder.ivFavorito, palestrante.isFavorito());
         });
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onItemClick(palestrante);
+        });
+    }
+
+    private void atualizarIconeFavorito(ImageView iv, boolean favorito) {
+        if (favorito) {
+            iv.setImageResource(R.drawable.ic_bookmark);
+            ImageViewCompat.setImageTintList(iv, ColorStateList.valueOf(Color.parseColor("#4CAF50")));
+        } else {
+            iv.setImageResource(R.drawable.ic_bookmark_border);
+            ImageViewCompat.setImageTintList(iv, ColorStateList.valueOf(Color.parseColor("#888888")));
+        }
     }
 
     @Override
     public int getItemCount() {
         return palestrantes.size();
-    }
-
-    // Método para atualizar a lista (usado quando o filtro mudar)
-    public void updateList(List<Palestrante> novaLista) {
-        this.palestrantes = novaLista;
-        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

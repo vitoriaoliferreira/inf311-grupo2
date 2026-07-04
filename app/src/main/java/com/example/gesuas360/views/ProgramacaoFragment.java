@@ -14,15 +14,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gesuas360.R;
 import com.example.gesuas360.adapters.DateAdapter;
+import com.example.gesuas360.adapters.PalestranteFavoritoAdapter;
 import com.example.gesuas360.adapters.ProgramacaoAdapter;
+import com.example.gesuas360.models.DataEvento;
 import com.example.gesuas360.models.Palestra;
+import com.example.gesuas360.models.Palestrante;
 import com.example.gesuas360.repositories.PalestraRepository;
+import com.example.gesuas360.repositories.PalestranteRepository;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProgramacaoFragment extends BaseFragment {
-    private TextView tvCurrentDateLabel;
+
+    private static final String ARG_PALESTRA = "palestra";
+
+    private ProgramacaoAdapter programacaoAdapter;
+    private PalestranteFavoritoAdapter favAdapter;
+    private View cardFavProg;
+    private TextView tvFiltroAtivo;
+    private TextView tvLabel;
+
+    private String diaAtual = "";
+    private String palestranteFiltro = null;
 
     @Nullable
     @Override
@@ -34,57 +48,106 @@ public class ProgramacaoFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tvCurrentDateLabel = view.findViewById(R.id.tv_current_date_label);
+        PalestraRepository repo = PalestraRepository.getInstance();
+        List<DataEvento> diasDoEvento = repo.getDiasDoEvento();
+
+        tvLabel = view.findViewById(R.id.tv_current_date_label);
+        tvFiltroAtivo = view.findViewById(R.id.tv_filtro_ativo);
+        cardFavProg = view.findViewById(R.id.card_palestrantes_fav_prog);
+
+        if (!diasDoEvento.isEmpty()) {
+            diaAtual = diasDoEvento.get(0).getDia();
+            tvLabel.setText(diasDoEvento.get(0).getLabel());
+        }
+
+        configurarProgramacao(view, repo);
+        configurarDatas(view, repo, diasDoEvento);
+        configurarFavoritosSection(view);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        atualizarSecaoFavoritos();
+    }
+
+    private void configurarProgramacao(View view, PalestraRepository repo) {
+        programacaoAdapter = new ProgramacaoAdapter(
+                repo.getPalestrasByData(diaAtual),
+                palestra -> navegarParaDetalhes(view, palestra)
+        );
 
         RecyclerView rvProgramacao = view.findViewById(R.id.rv_programacao);
         rvProgramacao.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvProgramacao.setAdapter(programacaoAdapter);
+    }
 
-        List<Palestra> lista = PalestraRepository.getInstance().getPalestrasByDay(11);
-
-        ProgramacaoAdapter adapter = new ProgramacaoAdapter(lista, palestra -> {
-            Navigation.findNavController(view).navigate(R.id.action_programacao_to_detalhes);
+    private void configurarDatas(View view, PalestraRepository repo, List<DataEvento> diasDoEvento) {
+        DateAdapter dateAdapter = new DateAdapter(diasDoEvento, data -> {
+            diaAtual = data.getDia();
+            tvLabel.setText(data.getLabel());
+            palestranteFiltro = null;
+            if (favAdapter != null) favAdapter.updateData(
+                    PalestranteRepository.getInstance().getPalesrantesFavoritos());
+            atualizarListaProgramacao(repo);
+            atualizarIndicadorFiltro();
         });
-
-        rvProgramacao.setAdapter(adapter);
-
-        atualizarLabelData(11);
 
         RecyclerView rvDates = view.findViewById(R.id.rv_dates);
         rvDates.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rvDates.setAdapter(
-                new DateAdapter(
-                        Arrays.asList("11", "12", "13", "14"),
-                        dia -> {
-                            // Atualiza a lista de palestras
-                            adapter.atualizarPalestras(
-                                    PalestraRepository.getInstance().getPalestrasByDay(dia)
-                            );
-                            atualizarLabelData(dia);
-                        }
-                )
-        );
+        rvDates.setAdapter(dateAdapter);
     }
 
-    private void atualizarLabelData(int dia) {
-        if (tvCurrentDateLabel == null) return;
-        String data;
-        switch (dia) {
-            case 11:
-                data = "Segunda-feira, 11 de maio";
-                break;
-            case 12:
-                data = "Terça-feira, 12 de maio";
-                break;
-            case 13:
-                data = "Quarta-feira, 13 de maio";
-                break;
-            case 14:
-                data = "Quinta-feira, 14 de maio";
-                break;
-            default:
-                data = "Dia " + dia;
+    private void configurarFavoritosSection(View view) {
+        List<Palestrante> favoritos = PalestranteRepository.getInstance().getPalesrantesFavoritos();
+
+        favAdapter = new PalestranteFavoritoAdapter(favoritos, (palestrante, selecionado) -> {
+            palestranteFiltro = selecionado ? palestrante.getNome() : null;
+            atualizarListaProgramacao(PalestraRepository.getInstance());
+            atualizarIndicadorFiltro();
+        });
+
+        RecyclerView rvFav = view.findViewById(R.id.rv_fav_prog);
+        rvFav.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvFav.setAdapter(favAdapter);
+
+        cardFavProg.setVisibility(favoritos.isEmpty() ? View.GONE : View.VISIBLE);
+    }
+
+    private void atualizarSecaoFavoritos() {
+        if (favAdapter == null || cardFavProg == null) return;
+        List<Palestrante> favoritos = PalestranteRepository.getInstance().getPalesrantesFavoritos();
+        favAdapter.updateData(favoritos);
+        palestranteFiltro = null;
+        cardFavProg.setVisibility(favoritos.isEmpty() ? View.GONE : View.VISIBLE);
+        atualizarListaProgramacao(PalestraRepository.getInstance());
+        atualizarIndicadorFiltro();
+    }
+
+    private void atualizarListaProgramacao(PalestraRepository repo) {
+        if (programacaoAdapter == null) return;
+        List<Palestra> base = repo.getPalestrasByData(diaAtual);
+        if (palestranteFiltro != null) {
+            List<Palestra> filtradas = new ArrayList<>();
+            for (Palestra p : base) {
+                if (palestranteFiltro.equals(p.getPalestranteNome())) filtradas.add(p);
+            }
+            programacaoAdapter.updateData(filtradas);
+        } else {
+            programacaoAdapter.updateData(base);
         }
-        tvCurrentDateLabel.setText(data);
+    }
+
+    private void atualizarIndicadorFiltro() {
+        if (tvFiltroAtivo != null) {
+            tvFiltroAtivo.setVisibility(palestranteFiltro != null ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    private void navegarParaDetalhes(View view, Palestra palestra) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ARG_PALESTRA, palestra);
+        Navigation.findNavController(view).navigate(R.id.action_programacao_to_detalhes, bundle);
     }
 
     @Override

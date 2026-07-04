@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.ImageViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gesuas360.R;
@@ -30,6 +31,11 @@ public class ProgramacaoAdapter extends RecyclerView.Adapter<ProgramacaoAdapter.
         this.listener = listener;
     }
 
+    public void updateData(List<Palestra> novaLista) {
+        this.palestras = novaLista;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,10 +46,11 @@ public class ProgramacaoAdapter extends RecyclerView.Adapter<ProgramacaoAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Palestra palestra = palestras.get(position);
+
         holder.tvHorario.setText(palestra.getHorario());
         holder.tvLocal.setText(palestra.getLocal());
         holder.tvTitulo.setText(palestra.getTitulo());
-        
+
         if (palestra.getDescricao() != null && !palestra.getDescricao().isEmpty()) {
             holder.tvDescricao.setVisibility(View.VISIBLE);
             holder.tvDescricao.setText(palestra.getDescricao());
@@ -51,32 +58,41 @@ public class ProgramacaoAdapter extends RecyclerView.Adapter<ProgramacaoAdapter.
             holder.tvDescricao.setVisibility(View.GONE);
         }
 
-        if (palestra.getPalestranteNome() != null && !palestra.getPalestranteNome().isEmpty()) {
+        boolean temPalestrante = palestra.getPalestranteNome() != null
+                && !palestra.getPalestranteNome().isEmpty();
+
+        if (temPalestrante) {
             holder.layoutPalestrante.setVisibility(View.VISIBLE);
             holder.tvPalestranteNome.setText(palestra.getPalestranteNome());
-            holder.tvPalestranteBio.setText(palestra.getPalestranteBio());
+            if (holder.tvPalestranteCargo != null) {
+                holder.tvPalestranteCargo.setText(palestra.getPalestranteBio());
+            }
         } else {
             holder.layoutPalestrante.setVisibility(View.GONE);
         }
 
-        if (palestra.isFavorito()) {
-            holder.ivFavorito.setImageResource(R.drawable.ic_bookmark);
-            holder.ivFavorito.setImageTintList(ColorStateList.valueOf(Color.parseColor("#689F38")));
-        } else {
-            holder.ivFavorito.setImageResource(R.drawable.ic_bookmark_border);
-            holder.ivFavorito.setImageTintList(ColorStateList.valueOf(Color.parseColor("#888888")));
-        }
+        atualizarIconeFavorito(holder.ivBookmark, palestra.isFavorito());
 
         holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onItemClick(palestra);
-            }
+            if (listener != null) listener.onItemClick(palestra);
         });
 
-        holder.ivFavorito.setOnClickListener(v -> {
+        holder.ivBookmark.setOnClickListener(v -> {
             palestra.setFavorito(!palestra.isFavorito());
-            notifyItemChanged(position);
+            atualizarIconeFavorito(holder.ivBookmark, palestra.isFavorito());
         });
+    }
+
+    private void atualizarIconeFavorito(ImageView iv, boolean favorito) {
+        if (favorito) {
+            iv.setImageResource(R.drawable.ic_bookmark);
+            ImageViewCompat.setImageTintList(iv, ColorStateList.valueOf(Color.parseColor("#4CAF50")));
+            iv.setAlpha(1f);
+        } else {
+            iv.setImageResource(R.drawable.ic_bookmark_border);
+            ImageViewCompat.setImageTintList(iv, ColorStateList.valueOf(Color.parseColor("#888888")));
+            iv.setAlpha(1f);
+        }
     }
 
     @Override
@@ -85,9 +101,9 @@ public class ProgramacaoAdapter extends RecyclerView.Adapter<ProgramacaoAdapter.
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvHorario, tvLocal, tvTitulo, tvDescricao, tvPalestranteNome, tvPalestranteBio;
+        TextView tvHorario, tvLocal, tvTitulo, tvDescricao, tvPalestranteNome, tvPalestranteCargo;
         View layoutPalestrante;
-        ImageView ivFavorito;
+        ImageView ivBookmark;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,9 +112,9 @@ public class ProgramacaoAdapter extends RecyclerView.Adapter<ProgramacaoAdapter.
             tvTitulo = itemView.findViewById(R.id.tv_titulo);
             tvDescricao = itemView.findViewById(R.id.tv_descricao);
             tvPalestranteNome = itemView.findViewById(R.id.tv_palestrante_nome);
-            tvPalestranteBio = itemView.findViewById(R.id.tv_palestrante_bio);
-            layoutPalestrante = itemView.findViewById(R.id.ll_palestrante);
-            ivFavorito = itemView.findViewById(R.id.iv_favorito);
+            tvPalestranteCargo = itemView.findViewById(R.id.tv_palestrante_cargo);
+            layoutPalestrante = itemView.findViewById(R.id.layoutPalestrante);
+            ivBookmark = itemView.findViewById(R.id.iv_bookmark);
         }
     }
 

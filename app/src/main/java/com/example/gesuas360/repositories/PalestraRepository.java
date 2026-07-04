@@ -1,171 +1,122 @@
 package com.example.gesuas360.repositories;
 
+import com.example.gesuas360.models.DataEvento;
 import com.example.gesuas360.models.Palestra;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PalestraRepository {
     private static PalestraRepository instance;
-
-    // Listas separadas para cada dia (11 a 14)
-    private List<Palestra> palestrasMockDay11;
-    private List<Palestra> palestrasMockDay12;
-    private List<Palestra> palestrasMockDay13;
-    private List<Palestra> palestrasMockDay14;
+    private final List<Palestra> palestrasMock;
 
     private PalestraRepository() {
-        // ==================== DIA 11 ====================
-        palestrasMockDay11 = new ArrayList<>();
-        palestrasMockDay11.add(new Palestra(
-                "09:00",
-                "Auditório",
-                "Credenciamento e boas-vindas",
-                "Início das atividades e entrega de materiais.",
-                "",
-                "",
-                false
-        ));
-        palestrasMockDay11.add(new Palestra(
-                "10:00",
-                "Auditório",
-                "Abertura oficial do SUAS 360",
-                "Presença de autoridades e apresentação do evento.",
-                "",
-                "",
-                false
-        ));
-        palestrasMockDay11.add(new Palestra(
-                "14:00",
-                "Sala A",
-                "Vínculos que Protegem",
-                "Conexões humanas que sustentam a proteção social no SUAS",
-                "Mariana Torres",
-                "Assistente Social, Mestre e Doutora em Serviço Social pela PUC/SP",
-                false
-        ));
+        palestrasMock = new ArrayList<>();
 
-        // ==================== DIA 12 ====================
-        palestrasMockDay12 = new ArrayList<>();
-        palestrasMockDay12.add(new Palestra(
-                "09:00",
-                "Sala B",
-                "CRAS em Ação: Prevenção e Fortalecimento",
-                "Estratégias do CRAS para prevenção de violações de direitos e fortalecimento de vínculos comunitários.",
-                "Carlos Alberto",
-                "Assistente Social e Coordenador de CRAS há 12 anos",
-                false
-        ));
-        palestrasMockDay12.add(new Palestra(
-                "10:30",
-                "Sala A",
-                "Cadastro Único e Atualização de Dados",
-                "Importância da gestão do CadÚnico para acesso aos programas sociais.",
-                "Juliana Menezes",
-                "Especialista em Cadastro Único pelo MDS",
-                false
-        ));
-        palestrasMockDay12.add(new Palestra(
-                "14:00",
-                "Sala C",
-                "Saúde Mental no SUAS",
-                "Abordagem intersetorial para acolhimento de usuários em sofrimento psíquico.",
-                "Dra. Paula Regina",
-                "Psicóloga e Doutora em Saúde Coletiva",
-                false
-        ));
+        // Dia 11
+        palestrasMock.add(new Palestra("09:00", "11", "Hall de Entrada",
+                "Credenciamento", "Recepção e entrega de materiais e credenciais do evento.",
+                "", "", false));
+        palestrasMock.add(new Palestra("10:00", "11", "Auditório Principal",
+                "Abertura Oficial do SUAS 360", "Presença de autoridades e apresentação da programação completa do evento.",
+                "", "", false));
+        palestrasMock.add(new Palestra("14:00", "11", "Sala A",
+                "Vínculos que Protegem", "Conexões humanas que sustentam a proteção social no SUAS. Exploraremos como o fortalecimento dos vínculos familiares e comunitários é essencial para a eficácia das políticas públicas.",
+                "Mariana Torres", "Assistente Social, Mestre e Doutora em Serviço Social pela PUC/SP", false));
+        palestrasMock.add(new Palestra("16:00", "11", "Auditório Principal",
+                "O SUAS e os Desafios Contemporâneos", "Análise das normativas e da implementação do SUAS nos municípios brasileiros, com foco nos desafios da gestão descentralizada.",
+                "Paulo Souza", "Consultor e professor universitário, especialista em SUAS", false));
 
-        // ==================== DIA 13 ====================
-        palestrasMockDay13 = new ArrayList<>();
-        palestrasMockDay13.add(new Palestra(
-                "09:00",
-                "Auditório",
-                "População em Situação de Rua",
-                "Políticas de abordagem social, acesso à documentação e cuidados no acolhimento.",
-                "Marcos Vinícius",
-                "Mestre em Serviço Social e Educador Social com 15 anos de experiência",
-                false
-        ));
-        palestrasMockDay13.add(new Palestra(
-                "10:30",
-                "Sala B",
-                "Proteção à Criança e ao Adolescente",
-                "Ações do SUAS na garantia dos direitos previstos no ECA.",
-                "Dra. Fernanda Lima",
-                "Promotora da Vara da Infância e Juventude",
-                false
-        ));
-        palestrasMockDay13.add(new Palestra(
-                "14:00",
-                "Sala A",
-                "Gênero e Diversidade nos Serviços",
-                "Atendimento humanizado e inclusivo à população LGBTQIA+ e mulheres em situação de violência.",
-                "Karen Sampaio",
-                "Socióloga e Especialista em Políticas de Gênero",
-                false
-        ));
+        // Dia 12
+        palestrasMock.add(new Palestra("09:00", "12", "Sala B",
+                "Gestão Municipal e Eficiência no SUAS", "Como otimizar recursos e ampliar o impacto das políticas de assistência social em municípios de todos os portes.",
+                "Maria Silva", "Especialista em Gestão Pública", false));
+        palestrasMock.add(new Palestra("14:00", "12", "Auditório Principal",
+                "Liderança e Planejamento Estratégico", "Experiências concretas de gestão pública em municípios de médio porte, com destaque para os resultados alcançados.",
+                "José da Silva", "Gestor Municipal", false));
+        palestrasMock.add(new Palestra("16:00", "12", "Sala A",
+                "Fortalecendo Vínculos Comunitários", "A atuação do assistente social na construção de redes de proteção e na articulação de recursos territoriais.",
+                "Tânia Maria", "Assistente Social", false));
 
-        // ==================== DIA 14 ====================
-        palestrasMockDay14 = new ArrayList<>();
-        palestrasMockDay14.add(new Palestra(
-                "09:00",
-                "Sala C",
-                "Inclusão Produtiva e Geração de Renda",
-                "Oficinas e cursos profissionalizantes como ferramenta de autonomia para os usuários.",
-                "André Oliveira",
-                "Economista e Consultor do Ministério do Desenvolvimento Social",
-                false
-        ));
-        palestrasMockDay14.add(new Palestra(
-                "10:30",
-                "Auditório",
-                "Mesa Redonda: Desafios do SUAS 2026",
-                "Debate sobre financiamento, gestão de pessoas, inovação social e intersetorialidade.",
-                "Mesa com 5 Especialistas",
-                "",
-                false
-        ));
-        palestrasMockDay14.add(new Palestra(
-                "14:00",
-                "Auditório",
-                "Encerramento e Carta Compromisso",
-                "Leitura da carta com encaminhamentos e propostas para o fortalecimento do SUAS.",
-                "",
-                "",
-                false
-        ));
+        // Dia 13
+        palestrasMock.add(new Palestra("09:00", "13", "Auditório Principal",
+                "História da Assistência Social no Brasil", "Da filantropia ao direito: uma trajetória de conquistas e desafios que moldaram o SUAS como o conhecemos hoje.",
+                "Abigail Torres", "Doutora em Serviço Social", false));
+        palestrasMock.add(new Palestra("14:00", "13", "Sala B",
+                "Ética Profissional no Serviço Social", "Princípios fundamentais e dilemas éticos na prática cotidiana do serviço social nos equipamentos do SUAS.",
+                "Abigail Torres", "Doutora em Serviço Social", false));
+        palestrasMock.add(new Palestra("16:00", "13", "Sala A",
+                "Mesa-Redonda: SUAS 360 em Debate", "Discussão coletiva sobre os avanços, lacunas e perspectivas do sistema de assistência social.",
+                "Paulo Souza", "Consultor e professor universitário, especialista em SUAS", false));
+
+        // Dia 14
+        palestrasMock.add(new Palestra("09:00", "14", "Auditório Principal",
+                "Keynote: O Futuro do SUAS", "Perspectivas, inovações e desafios para os próximos anos da assistência social no Brasil.",
+                "Mariana Torres", "Assistente Social, Mestre e Doutora em Serviço Social pela PUC/SP", false));
+        palestrasMock.add(new Palestra("17:00", "14", "Auditório Principal",
+                "Encerramento e Premiações", "Cerimônia de encerramento, reconhecimento das contribuições e entrega de certificados.",
+                "", "", false));
     }
 
-    // Singleton
     public static synchronized PalestraRepository getInstance() {
-        if (instance == null) {
-            instance = new PalestraRepository();
-        }
+        if (instance == null) instance = new PalestraRepository();
         return instance;
-
     }
+
     public List<Palestra> getPalestras() {
-        List<Palestra> todas = new ArrayList<>();
-        todas.addAll(palestrasMockDay11);
-        todas.addAll(palestrasMockDay12);
-        todas.addAll(palestrasMockDay13);
-        todas.addAll(palestrasMockDay14);
-        return todas;
+        return palestrasMock;
     }
 
-    // Retorna a lista de um dia específico (11 a 14)
-    public List<Palestra> getPalestrasByDay(int day) {
-        switch (day) {
-            case 11: return palestrasMockDay11;
-            case 12: return palestrasMockDay12;
-            case 13: return palestrasMockDay13;
-            case 14: return palestrasMockDay14;
-            default: return new ArrayList<>();
+    public List<Palestra> getPalestrasByData(String dia) {
+        List<Palestra> resultado = new ArrayList<>();
+        for (Palestra p : palestrasMock) {
+            if (dia.equals(p.getData())) resultado.add(p);
+        }
+        return resultado;
+    }
+
+    /**
+     * Retorna os dias do evento derivados das palestras cadastradas.
+     * Quando a API estiver pronta, substituir pelo endpoint GET /api/evento/dias
+     * que devolve: [{ "dia": "11", "mes": "Maio", "label": "Segunda-Feira, 11 de Maio" }, ...]
+     */
+    public List<DataEvento> getDiasDoEvento() {
+        Map<String, DataEvento> diasMap = new LinkedHashMap<>();
+        for (Palestra p : palestrasMock) {
+            if (!diasMap.containsKey(p.getData())) {
+                diasMap.put(p.getData(), criarDataEvento(p.getData()));
+            }
+        }
+        return new ArrayList<>(diasMap.values());
+    }
+
+    private DataEvento criarDataEvento(String dia) {
+        switch (dia) {
+            case "11": return new DataEvento("11", "Maio", "Segunda-Feira, 11 de Maio");
+            case "12": return new DataEvento("12", "Maio", "Terça-Feira, 12 de Maio");
+            case "13": return new DataEvento("13", "Maio", "Quarta-Feira, 13 de Maio");
+            case "14": return new DataEvento("14", "Maio", "Quinta-Feira, 14 de Maio");
+            default:   return new DataEvento(dia, "Maio", dia + " de Maio");
         }
     }
 
-    public List<Palestra> getPalestrasMockDay11() { return palestrasMockDay11; }
-    public List<Palestra> getPalestrasMockDay12() { return palestrasMockDay12; }
-    public List<Palestra> getPalestrasMockDay13() { return palestrasMockDay13; }
-    public List<Palestra> getPalestrasMockDay14() { return palestrasMockDay14; }
+    public List<Palestra> getPalestrasFavoritas() {
+        List<Palestra> favoritas = new ArrayList<>();
+        for (Palestra p : palestrasMock) {
+            if (p.isFavorito()) favoritas.add(p);
+        }
+        return favoritas;
+    }
+
+    public List<Palestra> getPalestrasDoPalestrante(String nomePalestrante) {
+        List<Palestra> resultado = new ArrayList<>();
+        for (Palestra p : palestrasMock) {
+            if (nomePalestrante != null && nomePalestrante.equals(p.getPalestranteNome())) {
+                resultado.add(p);
+            }
+        }
+        return resultado;
+    }
 }
