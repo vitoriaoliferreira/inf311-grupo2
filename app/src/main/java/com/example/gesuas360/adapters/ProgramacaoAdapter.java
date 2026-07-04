@@ -117,4 +117,9 @@ public class ProgramacaoAdapter extends RecyclerView.Adapter<ProgramacaoAdapter.
             ivBookmark = itemView.findViewById(R.id.iv_bookmark);
         }
     }
+
+    public void atualizarPalestras(List<Palestra> novasPalestras) {
+        this.palestras = novasPalestras;
+        notifyDataSetChanged();
+    }
 }
