@@ -848,3 +848,30 @@ public void login(String email, String senha, AuthCallback callback) {
 | `DELAY_SIMULADO_MS` | `AuthRepository.java:38` | `1200` | Delay em ms do mock de login. Remover ao integrar API real. |
 | `CANAL_ID` | `GeSuasMessagingService.java:28` | `"gesuas_channel"` | ID do canal de notificação Android. Deve coincidir com o `default_notification_channel_id` no `AndroidManifest.xml`. |
 | `google-services.json` | `app/` | placeholder | Substituir pelo arquivo real do Firebase Console para ativar FCM. |
+
+---
+
+## Desenvolvido por:
+
+<table>
+  <tr>
+    <td align="center">
+        <a href="https://github.com/vitoriaoliferreira" target="_blank">
+            <img src="https://avatars.githubusercontent.com/u/86208082?v=4" width="80px" ><br>
+            Vitória Ferreira
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/caua-pereira" target="_blank">
+            <img src="https://avatars.githubusercontent.com/u/185918878?v=4" width="80px" ><br>
+            Cauã Pereira
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/HenryXV" target="_blank">
+            <img src="https://avatars.githubusercontent.com/u/44414211?v=4" width="80px" ><br>
+            Henrique Resende
+        </a>
+    </td>
+  </tr>
+</table>
